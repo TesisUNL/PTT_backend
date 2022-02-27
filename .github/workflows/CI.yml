@@ -1,0 +1,35 @@
+name: PTT_backend/admin CI
+
+on:
+  push:
+    branches:
+      - '*'         # matches every branch that doesn't contain a '/'
+      - '*/*'       # matches every branch containing a single '/'
+      - '**'        # matches every branch
+
+jobs:
+  ci-test:
+    name: Unit tests 
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Clone and checkout branch
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v1
+        with:
+            node-version: '16.14.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Running test
+        run: npm test
+
+      - name: Running lint
+        run: npm run lint:check
+
+
+
