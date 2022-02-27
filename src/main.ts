@@ -1,13 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import  helmet from 'helmet';
+import helmet from 'helmet';
 import { join } from 'path';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-
   app.use(helmet());
 
   // static and view engines
@@ -15,8 +14,7 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
 
-  
-  // config swagger 
+  // config swagger
   const config = new DocumentBuilder()
     .setTitle('RMB APP')
     .setDescription('API de la ruta turística de la Mancomunidad Bosque Seco')

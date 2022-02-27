@@ -10,8 +10,6 @@ export class AppController {
     return this.appService.getHello();
   }
 
-
-
   @Get('test')
   @Render('index')
   root(): { message: string } {

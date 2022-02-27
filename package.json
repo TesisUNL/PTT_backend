@@ -19,7 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "documentation": "npx @compodoc/compodoc -p tsconfig.json -s",
-    "com": "npx git-cz"
+    "com": "npx git-cz",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@nestjs/common": "^8.1.1",
@@ -53,8 +54,9 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.1",
+    "husky": "^7.0.4",
     "jest": "^27.3.0",
-    "prettier": "^2.4.1",
+    "prettier": "2.5.1",
     "source-map-support": "^0.5.20",
     "supertest": "^6.1.6",
     "ts-jest": "^27.0.7",
