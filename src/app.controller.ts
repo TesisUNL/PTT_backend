@@ -13,6 +13,6 @@ export class AppController {
   @Get('test')
   @Render('index')
   root(): { message: string } {
-    return { message: 'Hello world!' };
+    return { message: 'Hello world Test!' };
   }
 }
