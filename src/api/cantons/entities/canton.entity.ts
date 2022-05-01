@@ -1,4 +1,4 @@
-import { TouristAttraction } from '../../tourist-attraction/entities/tourist-attraction.entity';
+import { TouristAttraction } from '../../tourist-attractions/entities/tourist-attraction.entity';
 import {
   Entity,
   Column,

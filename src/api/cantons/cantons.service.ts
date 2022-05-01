@@ -3,13 +3,13 @@ import { CreateCantonDto } from './dto/create-canton.dto';
 import { UpdateCantonDto } from './dto/update-canton.dto';
 
 @Injectable()
-export class CantonService {
+export class CantonsService {
   create(createCantonDto: CreateCantonDto) {
     return 'This action adds a new canton';
   }
 
   findAll() {
-    return `This action returns all canton`;
+    return `This action returns all cantons`;
   }
 
   findOne(id: number) {
