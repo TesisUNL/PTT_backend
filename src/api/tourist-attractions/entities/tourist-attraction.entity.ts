@@ -1,9 +1,11 @@
+import { Canton } from '../../cantons/entities/canton.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity()
@@ -20,14 +22,17 @@ export class TouristAttraction {
   @Column({ length: 120, nullable: false })
   short_description: string;
 
-  @Column({ length: 255 })
-  password: string;
-
-  @Column({ default: true })
-  isActive: boolean;
+  @Column()
+  long_description?: string;
 
   @Column()
-  imageUrl: string;
+  cover_image: string; // url review possibility of use some free resource to allocate the image if not maybe s3 is a good option
+
+  @Column()
+  imageUrl: string[];
+
+  @ManyToOne(() => Canton)
+  canton: Canton;
 
   @CreateDateColumn({
     type: 'timestamp',
