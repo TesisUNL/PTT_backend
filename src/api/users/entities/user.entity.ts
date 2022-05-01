@@ -1,4 +1,4 @@
-import { APP_ROLES } from 'src/utils/utils';
+import { APP_ROLES } from '../../utils';
 import {
   Entity,
   Column,
@@ -18,13 +18,13 @@ export class User {
   @Column({ type: 'enum', enum: APP_ROLES, default: APP_ROLES.GUEST })
   role: string;
 
-  @Column({ length: 70, nullable: false })
+  @Column({ length: 70, nullable: false, unique: true })
   email: string;
 
   @Column({ length: 255 })
   password: string;
 
-  @Column()
+  @Column({ default: true })
   isActive: boolean;
 
   @Column()
