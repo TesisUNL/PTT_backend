@@ -5,4 +5,5 @@
 
 npm test
 npm run format
-npm run lint
+npm run lint:check
+#npm run lint is for fix
