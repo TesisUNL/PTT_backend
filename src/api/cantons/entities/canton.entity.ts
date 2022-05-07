@@ -1,4 +1,4 @@
-import { TouristAttraction } from '../../tourist-attractions/entities/tourist-attraction.entity';
+import { Attraction } from 'src/api/attractions/entities/attraction.entity';
 import {
   Entity,
   Column,
@@ -16,13 +16,30 @@ export class Canton {
   @Column({ length: 255 })
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
+  description: string;
+
+  @Column({ default: 0 })
   tourist_attractions_count: number;
 
+  // not of all necessary but could be important to scale (by default = loja)
+  @Column({ default: 'Loja' })
+  province: string;
+
   // relation with tourist attraction one to many
-  @OneToMany(
-    () => TouristAttraction,
-    (touristAttraction) => touristAttraction.canton,
-  )
-  tourist_attractions: TouristAttraction[];
+  @OneToMany(() => Attraction, (attraction) => attraction.canton)
+  tourist_attractions?: Attraction[];
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  created_at: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  updated_at: Date;
 }
