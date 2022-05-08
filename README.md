@@ -1,7 +1,6 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://bosquesecoturismo.com/x/cdn/?https://storage.googleapis.com/wzukusers/user-27851147/images/592d8afd6eb35vdTPKVi/nuevo-logo_d200.png" width="320" alt="LOGO DE la mancomunidad bosque Seco" /></a>
 </p>
-change
   
   <p align="center">Backend para la aplicación de la Ruta Turśitica de la <a href="http://www.mancomunidadbosqueseco.gob.ec/" target="_blank">Mancomunidad Bosque Seco </a> Con el fin de incentivar el turismo</p>
     <p align="center">
