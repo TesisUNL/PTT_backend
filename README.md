@@ -102,7 +102,19 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+# Documentación
 
+Para generar la documentación del proyecto utilice 
+
+```bash
+$ npm run documentation
+```
+
+Para generar el informe del coverage del proyecto utilice 
+
+```bash
+$ npm run test:cov
+```
 
 
 
