@@ -1,4 +1,4 @@
-import { Attraction } from 'src/api/attractions/entities/attraction.entity';
+import { Attraction } from '../../attractions/entities/attraction.entity';
 import {
   Entity,
   Column,

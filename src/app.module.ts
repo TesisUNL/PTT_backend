@@ -6,7 +6,7 @@ import { UsersModule } from './api/users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { SharedModule } from './api/config/config.module';
 import { CantonsModule } from './api/cantons/cantons.module';
-import { AttractionModule } from './api/attractions/attractions.module';
+import { AttractionsModule } from './api/attractions/attractions.module';
 import { RatingsModule } from './api/ratings/ratings.module';
 import { TouristRoutesModule } from './api/tourist-routes/tourist-routes.module';
 
@@ -16,7 +16,7 @@ import { TouristRoutesModule } from './api/tourist-routes/tourist-routes.module'
     DatabaseModule,
     UsersModule,
     CantonsModule,
-    AttractionModule,
+    AttractionsModule,
     RatingsModule,
     TouristRoutesModule,
     RatingsModule,
