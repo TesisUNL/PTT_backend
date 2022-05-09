@@ -15,7 +15,7 @@ export class Rating {
   id: string;
 
   @Column({ type: 'int' })
-  starts: number;
+  stars: number;
 
   // (Maybe it could be a table to storage reply's from users but not priority i think) )
   @Column({ nullable: true })

@@ -18,8 +18,6 @@ export class Attraction {
   @Column({ length: 255 })
   name: string;
 
-  /*@Column({ type: 'point' })
-  coordinates?: number;*/
   @Column({ nullable: true })
   latitude: number;
 
@@ -44,11 +42,6 @@ export class Attraction {
 
   @OneToMany(() => Rating, (rating) => rating.attraction)
   ratings: Rating[];
-
-  // for have a average of ratings
-  // validate this solution not sure about https://wanago.io/2021/11/29/generated-columns-postgresql-typeorm/ for count ratings or
-  // add some virtual field ( best option)
-  // or add a beforeInsert for this column
 
   @CreateDateColumn({
     type: 'timestamp',
