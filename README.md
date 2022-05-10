@@ -1,48 +1,92 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://bosquesecoturismo.com/x/cdn/?https://storage.googleapis.com/wzukusers/user-27851147/images/592d8afd6eb35vdTPKVi/nuevo-logo_d200.png" width="320" alt="LOGO DE la mancomunidad bosque Seco" /></a>
 </p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
   
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+  <p align="center">Backend para la aplicación de la Ruta Turśitica de la <a href="http://www.mancomunidadbosqueseco.gob.ec/" target="_blank">Mancomunidad Bosque Seco </a> Con el fin de incentivar el turismo</p>
     <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/badge/npm-8.3.1-green" alt="NPM Version" /></a>
+
+
+
+
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Descripción
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Este repositorio esta construido bajo [Nest](https://github.com/nestjs/nest) framework de TypeScript. Como parte del proyecto para la ruta turística de la MBS  
 
-## Installation
+## Pre-requisitos
+### 1.-Instalar node version manager (NVM)
+Se recomienda emplear <a href="https://github.com/nvm-sh/nvm">nvm</a>
 
 ```bash
-$ npm install
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ```
 
-## Running the app
+### 2.-Instalar Node v16.15.0
+```bash
+nvm install 16.15.0
+```
+
+### 3.-Instalar dependencias
+```bash
+npm install
+```
+
+
+## Corriendo la app
 
 ```bash
 # development
-$ npm run start
+$ npm start
+```
 
-# watch mode
-$ npm run start:dev
 
-# production mode
-$ npm run start:prod
+## Base de Datos Local
+
+### Pre-requisitos
+
+### 1 Instalar mysql 
+* Linux
+```bash
+# ubuntu
+$ sudo apt install mysql-server
+```
+* windows
+
+Ir a la página oficial y descargar <a href="https://dev.mysql.com/downloads/mysql/">mysql</a>
+
+### 2 Crear BD 
+
+Genere una Base de datos con el nombre <span>RTMBS</span> para crear la bd se accede a la terminal de mysql con su usuario y contraseña.
+```mysql
+$ mysql -u <userDB> -p
+```
+Posteriormente en la terminal de mysql se crea la base de datos:
+```mysql
+mysql> create database RTMBS;
+```
+### 3 Setter la variable de entorno
+Para generar la BD genere un archivo`.env` en la ruta principal del proyecto y sete la variable `ORM_SYNC` a `true`. Dentro del archivo defina la configuración para la BD  
+
+```bash
+ORM_SYNC=true
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=<my-bd-username>
+DB_PASSWORD=<my-bd-password>
+DB_DATABASE_NAME=RTMBS
+```
+<i>**NOTE**</i>.- Una vez generada la BD defina la variable `ORM_SYNC=false` o eliminela de su archivo `.env`, caso contrario se generará nuevamente una BD eliminando sus datos locales.
+
+### Debug
+
+Para observar las querys generadas por Type-ORM agregue en el archivo `.env` la variable `DB_DEBUG` y asignele un valor de `true`
+
+```bash
+...
+DB_DATABASE_NAME=RTMBS
+DB_DEBUG=true
 ```
 
 ## Test
@@ -58,16 +102,19 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+# Documentación
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Para generar la documentación del proyecto utilice 
 
-## Stay in touch
+```bash
+$ npm run documentation
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Para generar el informe del coverage del proyecto utilice 
 
-## License
+```bash
+$ npm run test:cov
+```
 
-  Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
