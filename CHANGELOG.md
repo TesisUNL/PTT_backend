@@ -17,17 +17,30 @@
 ##### Bug Fixes
 
 *  🐛 add module attraction (41a3915e)
+
+##### Documentation Changes
+
+*  ✏️ improve readme (a7ecdf85)
+
+##### New Features
+
+*  🎸 new feature add (fc734ef8)
+
+##### Bug Fixes
+
 *  🐛 fix eslint on windows (#9) (60fc90d0)
 *  🐛 issues imports con app.module (#7) (a5d901b4)
 
 ##### Other Changes
 
+
 * TesisUNL/PTT_backend into feature/entities (61548191)
 * TesisUNL/PTT_backend (3044ffba)
+
 *  add mvc structure and hbs template engine (8eaebad8)
 
 ##### Refactors
 
 *  💡 Improve project structure and fix packages (#10) (899ff1ae)
-*  💡 Improve project structure and fix packages (4ab5f61c)
+
 
