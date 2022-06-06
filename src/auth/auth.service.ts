@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from '../api/users/users.service';
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from 'src/api/users/dto/create-user.dto';
-import { DatabaseTypeOrmError } from 'src/api/utils';
+import { CreateUserDto } from '../api/users/dto/create-user.dto';
+import { DatabaseTypeOrmError } from '../api/utils';
 
 @Injectable()
 export class AuthService {
@@ -20,8 +20,13 @@ export class AuthService {
 
       return createdUser;
     } catch (error) {
-      if (error?.code && error.code === DatabaseTypeOrmError?.UniqueConstraintError) {
-        throw new BadRequestException(`User with email:${authData.email} already exists`);
+      if (
+        error?.code &&
+        error.code === DatabaseTypeOrmError?.UniqueConstraintError
+      ) {
+        throw new BadRequestException(
+          `User with email:${authData.email} already exists`,
+        );
       }
 
       throw new BadRequestException('Something went wrong', error.code);
@@ -40,8 +45,14 @@ export class AuthService {
     }
   }
 
-  private async verifyPassword(plainTextPassword: string, hashedPassword: string) {
-    const isPasswordMatching = await bcrypt.compare(plainTextPassword, hashedPassword);
+  private async verifyPassword(
+    plainTextPassword: string,
+    hashedPassword: string,
+  ) {
+    const isPasswordMatching = await bcrypt.compare(
+      plainTextPassword,
+      hashedPassword,
+    );
     if (!isPasswordMatching) {
       throw new BadRequestException('Wrong credentials provided');
     }
