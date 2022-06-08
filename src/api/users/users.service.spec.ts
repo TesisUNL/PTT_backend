@@ -22,7 +22,6 @@ class ModelMock<T> {
       role: 'GSOC Operator',
       email: 'user100@gmail.com',
       name: 'User 100',
-      password: '$2b$10$8r8hMakgZRVuQCO8qCoMUOPpbWxTa1lr8bDdQSzSgynREN7J3SVbC',
       tenant_id: 'fe9c735b-67f3-11eb-a4c6-0e75692c197b',
     };
   }
