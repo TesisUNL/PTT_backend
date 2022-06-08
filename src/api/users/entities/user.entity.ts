@@ -13,7 +13,7 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  // !NOT NECESARY ADD ONLY IF WE NEED FOR SOME REASON
+  // !NOT NECESSARY ADD ONLY IF WE NEED FOR SOME REASON
   //@Column({ length: 255, unique: true })
   //userName: string;
 

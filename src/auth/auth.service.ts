@@ -57,4 +57,20 @@ export class AuthService {
       throw new BadRequestException('Wrong credentials provided');
     }
   }
+
+  async login(user: any) {
+    const payload = {
+      username: user.email as string,
+      password: user.password as string,
+    };
+    const filters = { email: user.username };
+    //const recordUser = await this.usersService.findOne({ filters });
+
+    //const { email, id, role } = recordUser;
+    return {
+      //  access_token: this.jwtService.sign(payload),
+      //  refresh_token: await this.generateRefreshToken(recordUser.id),
+      user: {}, //email, id, role },
+    };
+  }
 }
