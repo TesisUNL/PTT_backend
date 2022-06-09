@@ -13,8 +13,9 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 255, unique: true })
-  userName: string;
+  // !NOT NECESSARY ADD ONLY IF WE NEED FOR SOME REASON
+  //@Column({ length: 255, unique: true })
+  //userName: string;
 
   @Column({ type: 'enum', enum: APP_ROLES, default: APP_ROLES.USER })
   role: string;
@@ -24,11 +25,11 @@ export class User {
 
   // For record token login from social media
   @Column({ nullable: true })
-  authSocialToken: string;
+  authSocialToken?: string;
 
   // TODO: add password hashing ONLY IF WE USE USERNAME/PASSWORD AUTHENTICATION LOCAL STRATEGY
-  //@Column({ length: 255 })
-  //password: string;
+  @Column({ length: 255 })
+  password: string;
 
   @Column({ default: true })
   isActive: boolean;

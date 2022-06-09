@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
-import { UsersService } from './users.service';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { User } from '../api/users/entities/user.entity';
+import { UsersService } from '../api/users/users.service';
+import { AuthService } from './auth.service';
 
 class ModelMock<T> {
   public findAll() {
@@ -27,14 +28,14 @@ class ModelMock<T> {
   }
 }
 
-describe('UsersService', () => {
-  let service: UsersService;
-
+describe('AuthService', () => {
+  let service: AuthService;
   const userModelMock = new ModelMock<User>();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
+        AuthService,
         UsersService,
         {
           provide: getRepositoryToken(User),
@@ -43,7 +44,7 @@ describe('UsersService', () => {
       ],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
+    service = module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {

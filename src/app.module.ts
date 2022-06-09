@@ -9,6 +9,7 @@ import { CantonsModule } from './api/cantons/cantons.module';
 import { AttractionsModule } from './api/attractions/attractions.module';
 import { RatingsModule } from './api/ratings/ratings.module';
 import { TouristRoutesModule } from './api/tourist-routes/tourist-routes.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TouristRoutesModule } from './api/tourist-routes/tourist-routes.module'
     TouristRoutesModule,
     RatingsModule,
     SharedModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
