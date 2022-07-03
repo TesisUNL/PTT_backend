@@ -4,6 +4,7 @@ import { Canton } from '../cantons/entities/canton.entity';
 import { AttractionsService } from './attractions.service';
 import { Attraction } from './entities/attraction.entity';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ModelMock<T> {
   public findAll() {
     return [];

@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { CantonsService } from './cantons.service';
 import { Canton } from './entities/canton.entity';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ModelMock<T> {
   public findAll() {
     return [];
@@ -20,6 +21,7 @@ class ModelMock<T> {
     return {};
   }
 }
+
 describe('CantonsService', () => {
   let service: CantonsService;
 

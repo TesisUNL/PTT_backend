@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AttractionsService } from './attractions.service';
 import { AttractionsController } from './attractions.controller';
-import { CantonsModule } from '../cantons/cantons.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Attraction } from './entities/attraction.entity';
 import { Canton } from '../cantons/entities/canton.entity';

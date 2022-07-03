@@ -4,6 +4,7 @@ import { User } from '../api/users/entities/user.entity';
 import { UsersService } from '../api/users/users.service';
 import { AuthService } from './auth.service';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ModelMock<T> {
   public findAll() {
     return [];

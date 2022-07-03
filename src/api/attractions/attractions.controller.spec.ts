@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CantonsModule } from '../cantons/cantons.module';
 import { Canton } from '../cantons/entities/canton.entity';
 import { AttractionsController } from './attractions.controller';
 import { AttractionsService } from './attractions.service';
