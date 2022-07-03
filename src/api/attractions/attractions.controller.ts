@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  BadRequestException,
 } from '@nestjs/common';
 import { AttractionsService } from './attractions.service';
 import { CreateAttractionDto } from './dto/create-attraction.dto';
@@ -17,6 +18,10 @@ export class AttractionsController {
 
   @Post()
   create(@Body() createAttractionDto: CreateAttractionDto) {
+    if (!createAttractionDto?.cantonId) {
+      throw new BadRequestException('The canton id is not defined');
+    }
+
     return this.attractionsService.create(createAttractionDto);
   }
 

@@ -27,7 +27,7 @@ export class CantonsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.cantonsService.findOne(+id);
+    return this.cantonsService.findOne(id);
   }
 
   @Patch(':id')

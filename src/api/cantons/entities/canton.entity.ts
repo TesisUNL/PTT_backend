@@ -13,14 +13,15 @@ export class Canton {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 255 })
+  @Column({ length: 255, unique: true })
   name: string;
 
   @Column({ nullable: true })
   description: string;
 
-  @Column({ default: 0 })
-  tourist_attractions_count: number;
+  // ! generate this on the code with count mysql analize that
+  //@Column({ default: 0 })
+  //tourist_attractions_count: number;
 
   // not of all necessary but could be important to scale (by default = loja)
   @Column({ default: 'Loja' })
