@@ -1,9 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateCantonDto } from './dto/create-canton.dto';
 import { UpdateCantonDto } from './dto/update-canton.dto';
+import { Canton } from './entities/canton.entity';
 
 @Injectable()
 export class CantonsService {
+  constructor(
+    @InjectRepository(Canton)
+    private readonly cantonRepository: Repository<Canton>,
+  ) {}
+
   create(createCantonDto: CreateCantonDto) {
     return 'This action adds a new canton';
   }
@@ -12,8 +20,14 @@ export class CantonsService {
     return `This action returns all cantons`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} canton`;
+  async findOne(id: string) {
+    const canton = await this.cantonRepository.findOne({ id });
+
+    if (!canton) {
+      throw new NotFoundException(`Canton with ${id} not exist`);
+    }
+
+    return canton;
   }
 
   update(id: number, updateCantonDto: UpdateCantonDto) {

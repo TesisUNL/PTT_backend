@@ -31,7 +31,7 @@ export class Attraction {
   long_description: string;
 
   // url review possibility of use some free resource to allocate the image if not maybe s3 is a good option
-  @Column()
+  @Column({ nullable: true })
   cover_image: string;
 
   @Column({ type: 'simple-array', nullable: true })
