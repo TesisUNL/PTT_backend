@@ -8,18 +8,22 @@ import {
   Delete,
   BadRequestException,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AttractionsService } from './attractions.service';
 import { CreateAttractionDto } from './dto/create-attraction.dto';
 import { UpdateAttractionDto } from './dto/update-attraction.dto';
 
 @Controller('attractions')
+@ApiTags('attractions')
 export class AttractionsController {
   constructor(private readonly attractionsService: AttractionsService) {}
 
   @Post()
   create(@Body() createAttractionDto: CreateAttractionDto) {
     if (!createAttractionDto?.cantonId) {
-      throw new BadRequestException('The canton id is not defined');
+      throw new BadRequestException(
+        'The canton id is not defined, please provide one',
+      );
     }
 
     return this.attractionsService.create(createAttractionDto);
@@ -32,7 +36,7 @@ export class AttractionsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.attractionsService.findOne(+id);
+    return this.attractionsService.findOne(id);
   }
 
   @Patch(':id')

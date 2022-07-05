@@ -10,8 +10,10 @@ import {
 import { TouristRoutesService } from './tourist-routes.service';
 import { CreateTouristRouteDto } from './dto/create-tourist-route.dto';
 import { UpdateTouristRouteDto } from './dto/update-tourist-route.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('tourist-routes')
+@ApiTags('tourist routes')
 export class TouristRoutesController {
   constructor(private readonly touristRoutesService: TouristRoutesService) {}
 

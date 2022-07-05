@@ -39,11 +39,13 @@ export class AttractionsService {
   }
 
   findAll() {
-    return `This action returns all attractions`;
+    // make a query here available with all and findOne
+    return this.attractionRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} attraction`;
+  async findOne(id: string) {
+    // make a query here available with all and findOne
+    return this.attractionRepository.findOne(id);
   }
 
   update(id: number, updateAttractionDto: UpdateAttractionDto) {
