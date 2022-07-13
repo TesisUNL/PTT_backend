@@ -5,8 +5,7 @@ import { ConfigService } from '../config/config.service';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigService) =>
-        configService.TypeOrmConfig as TypeOrmModuleOptions,
+      useFactory: (configService: ConfigService) => configService.TypeOrmConfig as TypeOrmModuleOptions,
       inject: [ConfigService],
     }),
   ],
