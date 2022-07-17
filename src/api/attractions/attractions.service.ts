@@ -5,6 +5,8 @@ import { CreateAttractionDto } from './dto/create-attraction.dto';
 import { UpdateAttractionDto } from './dto/update-attraction.dto';
 import { Attraction } from './entities/attraction.entity';
 import { Canton } from '../cantons/entities/canton.entity';
+import { IQuery } from '../utils';
+import { processAttractionQueries } from './attraction.utils';
 
 @Injectable()
 export class AttractionsService {
@@ -29,21 +31,23 @@ export class AttractionsService {
       canton,
     };
 
-    const newAttraction = await this.attractionRepository.create(
-      attractionToSave,
-    );
+    const newAttraction = await this.attractionRepository.create(attractionToSave);
 
     await this.attractionRepository.save(newAttraction);
 
     return newAttraction;
   }
 
-  findAll() {
-    return `This action returns all attractions`;
+  findAll(queryParams: IQuery) {
+    const query = processAttractionQueries(queryParams);
+
+    return this.attractionRepository.find(query);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} attraction`;
+  async findOne(queryParams: IQuery) {
+    const query = processAttractionQueries(queryParams);
+
+    return this.attractionRepository.findOne(query);
   }
 
   update(id: number, updateAttractionDto: UpdateAttractionDto) {

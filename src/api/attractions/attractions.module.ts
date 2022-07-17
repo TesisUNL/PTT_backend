@@ -6,10 +6,7 @@ import { Attraction } from './entities/attraction.entity';
 import { Canton } from '../cantons/entities/canton.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Attraction]),
-    TypeOrmModule.forFeature([Canton]),
-  ],
+  imports: [TypeOrmModule.forFeature([Attraction]), TypeOrmModule.forFeature([Canton])],
   controllers: [AttractionsController],
   providers: [AttractionsService],
 })

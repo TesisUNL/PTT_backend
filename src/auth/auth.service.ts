@@ -20,13 +20,8 @@ export class AuthService {
 
       return createdUser;
     } catch (error) {
-      if (
-        error?.code &&
-        error.code === DatabaseTypeOrmError?.UniqueConstraintError
-      ) {
-        throw new BadRequestException(
-          `User with email:${authData.email} already exists`,
-        );
+      if (error?.code && error.code === DatabaseTypeOrmError?.UniqueConstraintError) {
+        throw new BadRequestException(`User with email:${authData.email} already exists`);
       }
 
       throw new BadRequestException('Something went wrong', error.code);
@@ -45,14 +40,8 @@ export class AuthService {
     }
   }
 
-  private async verifyPassword(
-    plainTextPassword: string,
-    hashedPassword: string,
-  ) {
-    const isPasswordMatching = await bcrypt.compare(
-      plainTextPassword,
-      hashedPassword,
-    );
+  private async verifyPassword(plainTextPassword: string, hashedPassword: string) {
+    const isPasswordMatching = await bcrypt.compare(plainTextPassword, hashedPassword);
     if (!isPasswordMatching) {
       throw new BadRequestException('Wrong credentials provided');
     }
