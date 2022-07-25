@@ -1,11 +1,12 @@
 export class CreateUserDto {
-  userName?: string;
+  name: string;
   role: string;
   email: string;
   authSocialToken?: string;
   password: string;
   isActive?: boolean;
   imageUrl?: string | null;
+  phone_number?: string | null;
 }
 
 export class LoginDto {

@@ -13,9 +13,8 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  // !NOT NECESSARY ADD ONLY IF WE NEED FOR SOME REASON
-  //@Column({ length: 255, unique: true })
-  //userName: string;
+  @Column({ length: 80 })
+  name: string;
 
   @Column({ type: 'enum', enum: APP_ROLES, default: APP_ROLES.USER })
   role: string;
@@ -37,6 +36,10 @@ export class User {
   // Possible not necessary but could be the photo of google record
   @Column({ nullable: true })
   imageUrl: string;
+
+  // Possible not necessary but could be the photo of google record
+  @Column({ nullable: true })
+  phone_number: string;
 
   @CreateDateColumn({
     type: 'timestamp',
