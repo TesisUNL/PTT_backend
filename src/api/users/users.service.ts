@@ -14,15 +14,6 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  async getByEmail(email: string) {
-    const user = await this.usersRepository.findOne({ email });
-    if (!user) {
-      throw new NotFoundException('User with this email does not exist');
-    }
-
-    return user;
-  }
-
   async create(createUserDto: CreateUserDto) {
     const newUser = await this.usersRepository.create(createUserDto);
     await this.usersRepository.save(newUser);
