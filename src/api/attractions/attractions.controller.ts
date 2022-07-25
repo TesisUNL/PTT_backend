@@ -20,7 +20,7 @@ export class AttractionsController {
   }
 
   @Get()
-  findAll(@Request() req, @Query() queryParamsDto: QueryParamsDto) {
+  findAll(@Request() _req, @Query() queryParamsDto: QueryParamsDto) {
     const query = parseQuery(queryParamsDto);
 
     return this.attractionsService.findAll(query);

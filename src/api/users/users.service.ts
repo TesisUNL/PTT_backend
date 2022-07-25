@@ -4,6 +4,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { IQuery } from '../utils';
+import { processUsersQueries } from './users.utils';
 
 @Injectable()
 export class UsersService {
@@ -27,12 +29,16 @@ export class UsersService {
     return newUser;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  findAll(queryParams: IQuery) {
+    const query = processUsersQueries(queryParams);
+
+    return this.usersRepository.find(query);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(queryParams: IQuery) {
+    const query = processUsersQueries(queryParams);
+
+    return this.usersRepository.findOne(query);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

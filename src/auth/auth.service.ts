@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../api/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../api/users/dto/create-user.dto';
@@ -30,7 +30,12 @@ export class AuthService {
 
   public async getAuthenticatedUser(email: string, plainTextPassword: string) {
     try {
-      const user = await this.usersService.getByEmail(email);
+      //const user = await this.usersService.getByEmail(email);
+      const filters = { email };
+      const user = await this.usersService.findOne({ filters });
+      if (!user) {
+        throw new NotFoundException(`User with ${email} does not exist`);
+      }
       await this.verifyPassword(plainTextPassword, user?.password);
       delete user?.password;
 

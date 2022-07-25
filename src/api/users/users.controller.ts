@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Request } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { parseQuery, QueryParamsDto } from '../utils';
 
 @Controller('users')
 @ApiTags('users')
@@ -15,13 +16,17 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Request() _req, @Query() queryParamsDto: QueryParamsDto) {
+    const query = parseQuery(queryParamsDto);
+
+    return this.usersService.findAll(query);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    const filters = { id };
+
+    return this.usersService.findOne({ filters });
   }
 
   @Patch(':id')
