@@ -18,13 +18,13 @@ export class Attraction {
   @Column({ length: 255 })
   name: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   latitude: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   longitude: number;
 
-  @Column({ length: 120 })
+  @Column({ length: 300 })
   short_description: string;
 
   @Column({ nullable: true })
