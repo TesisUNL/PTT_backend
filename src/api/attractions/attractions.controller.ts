@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, Query, Request } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { parseQuery, QueryParamsDto } from '../utils';
+import { mapAttractionEntity } from './attraction.utils';
 import { AttractionsService } from './attractions.service';
 import { CreateAttractionDto } from './dto/create-attraction.dto';
 import { UpdateAttractionDto } from './dto/update-attraction.dto';
@@ -20,10 +21,11 @@ export class AttractionsController {
   }
 
   @Get()
-  findAll(@Request() _req, @Query() queryParamsDto: QueryParamsDto) {
+  async findAll(@Request() _req, @Query() queryParamsDto: QueryParamsDto) {
     const query = parseQuery(queryParamsDto);
+    const attractions = await this.attractionsService.findAll(query);
 
-    return this.attractionsService.findAll(query);
+    return attractions.map((attraction) => mapAttractionEntity(attraction));
   }
 
   @Get(':id')

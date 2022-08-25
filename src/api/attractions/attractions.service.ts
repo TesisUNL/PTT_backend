@@ -39,7 +39,8 @@ export class AttractionsService {
   }
 
   findAll(queryParams: IQuery) {
-    const query = processAttractionQueries(queryParams);
+    const processQuery = processAttractionQueries(queryParams);
+    const query = { ...processQuery, relations: ['canton'] };
 
     return this.attractionRepository.find(query);
   }
