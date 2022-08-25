@@ -1,4 +1,4 @@
-import { In } from 'typeorm';
+import { In, Like } from 'typeorm';
 import { QueryParamsDto } from '.';
 
 export interface IQueryTypeOrm {
@@ -15,6 +15,7 @@ export type TFIlter = {
 
 export interface IOperationFilter {
   _in?: Array<string>;
+  _like?: string;
   /*_literalIn?: Array<string>;
   min?: number;
   max?: number;
@@ -31,20 +32,27 @@ export function processQuery(filter: IOperationFilter | string | number) {
   }
 
   if (filter._in) {
-    return In(filter._in || null);
+    return In(filter?._in || null);
+  }
+
+  if (filter._like) {
+    return Like(`%${filter._like}%` || null);
   }
 }
 
 export function parseQuery(queryParamsDto: QueryParamsDto): IQuery {
   const query: IQuery = {};
-  const filters = queryParamsDto?.filters && JSON.parse(queryParamsDto.filters.toString());
-
-  if (filters) {
-    query['filters'] = Object.keys(filters).reduce((acc, k) => {
-      acc[k.replace(/\s/g, '')] = filters[k];
-      return acc;
-    }, {});
-
-    return query;
+  try {
+    const filters = queryParamsDto?.filters && JSON.parse(queryParamsDto.filters.toString());
+    if (filters) {
+      query['filters'] = Object.keys(filters).reduce((acc, k) => {
+        acc[k.replace(/\s/g, '')] = filters[k];
+        return acc;
+      }, {});
+    }
+  } catch (error) {
+    console.error(error);
   }
+
+  return query;
 }
