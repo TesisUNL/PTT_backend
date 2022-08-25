@@ -41,3 +41,41 @@ export const processAttractionQueries = (queryParams: IQuery): TQueryOptionsAttr
 
   return query;
 };
+
+export interface IApiAttractionEntity {
+  id: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  short_description: string;
+  long_description: string;
+  cover_image: string;
+  images: string[];
+  canton: string;
+}
+
+export function mapAttractionEntity(attractionData: Attraction): IApiAttractionEntity {
+  return (
+    [
+      'id',
+      'name',
+      'latitude',
+      'longitude',
+      'short_description',
+      'long_description',
+      'cover_image',
+      'images',
+      'canton',
+    ] || []
+  ).reduce((acc: IApiAttractionEntity, element: string) => {
+    if (element != 'canton') {
+      acc[element] = attractionData[element];
+    }
+
+    if (element == 'canton' && attractionData?.[element]) {
+      acc[element] = attractionData[element]?.name;
+    }
+
+    return acc;
+  }, {} as IApiAttractionEntity);
+}
