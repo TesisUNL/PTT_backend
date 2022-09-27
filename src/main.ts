@@ -12,9 +12,9 @@ async function bootstrap() {
   app.use(helmet());
 
   // static and view engines
-  app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.setBaseViewsDir(join(__dirname, '..', 'views'));
-  app.setViewEngine('hbs');
+  // app.useStaticAssets(join(__dirname, '..', 'public'));
+  // // app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  // app.setViewEngine('hbs');
 
   // config swagger
   const config = new DocumentBuilder()
