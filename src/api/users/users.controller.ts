@@ -17,7 +17,7 @@ export class UsersController {
   }
 
   @Get()
-  findAll(@Request() _req, @Query() queryParamsDto: QueryParamsDto) {
+  findAll(@Query() queryParamsDto: QueryParamsDto) {
     const query = parseQuery(queryParamsDto);
 
     return this.usersService.findAll(query);

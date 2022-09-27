@@ -20,7 +20,7 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthenticationGuard)
   @Post('login')
-  logIn(@Body() authLoginData: LoginAuthDto, @Request() req) {
+  logIn(@Body() authLoginData: LoginAuthDto) {
     return this.authService.login(authLoginData);
   }
 }
