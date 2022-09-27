@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TouristRoutesService } from './tourist-routes.service';
 import { CreateTouristRouteDto } from './dto/create-tourist-route.dto';
 import { UpdateTouristRouteDto } from './dto/update-tourist-route.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('tourist-routes')
 @ApiTags('tourist routes')
 export class TouristRoutesController {
