@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../api/users/entities/user.entity';
@@ -38,6 +39,7 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         UsersService,
+        JwtService,
         {
           provide: getRepositoryToken(User),
           useValue: userModelMock,

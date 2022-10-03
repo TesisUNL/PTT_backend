@@ -1,11 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, Query, Request } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { parseQuery, QueryParamsDto } from '../utils';
 import { mapAttractionEntity } from './attraction.utils';
 import { AttractionsService } from './attractions.service';
 import { CreateAttractionDto } from './dto/create-attraction.dto';
 import { UpdateAttractionDto } from './dto/update-attraction.dto';
 
+@ApiBearerAuth()
 @Controller('attractions')
 @ApiTags('attractions')
 export class AttractionsController {
