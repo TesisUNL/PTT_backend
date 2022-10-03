@@ -19,11 +19,4 @@ export class ConfigService {
     };
     return config.database;
   }
-
-  get JWT_SECRET(): string {
-    return process.env.JWT_SECRET || 'secret';
-  }
-  get JWT_EXPIRATION_TIME(): number {
-    return Number(process.env.JWT_EXPIRATION_TIME) || 3600;
-  }
 }

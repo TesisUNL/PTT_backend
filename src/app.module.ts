@@ -10,8 +10,6 @@ import { AttractionsModule } from './api/attractions/attractions.module';
 import { RatingsModule } from './api/ratings/ratings.module';
 import { TouristRoutesModule } from './api/tourist-routes/tourist-routes.module';
 import { AuthModule } from './auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthenticationGuard } from './auth/guards/jwtAuthentication.guard';
 
 @Module({
   imports: [
@@ -27,12 +25,6 @@ import { JwtAuthenticationGuard } from './auth/guards/jwtAuthentication.guard';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthenticationGuard,
-    },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

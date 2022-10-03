@@ -1,10 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { CantonsService } from './cantons.service';
 import { CreateCantonDto } from './dto/create-canton.dto';
 import { UpdateCantonDto } from './dto/update-canton.dto';
 
-@ApiBearerAuth()
 @Controller('cantons')
 @ApiTags('cantons')
 export class CantonsController {
