@@ -3,10 +3,13 @@ import { UsersService } from '../api/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../api/users/dto/create-user.dto';
 import { DatabaseTypeOrmError } from '../api/utils';
+import { JwtService } from '@nestjs/jwt';
+import { User } from '../api/users/entities/user.entity';
+import { LoginAuthDto } from './dto/login-auth.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService, private readonly jwtService: JwtService) {}
 
   public async register(authData: CreateUserDto) {
     const hashedPassword = await bcrypt.hash(authData.password, 10);
@@ -16,9 +19,7 @@ export class AuthService {
         password: hashedPassword,
       });
 
-      delete createdUser?.password;
-
-      return createdUser;
+      return { ...createdUser, password: undefined };
     } catch (error) {
       if (error?.code && error.code === DatabaseTypeOrmError?.UniqueConstraintError) {
         throw new BadRequestException(`User with email:${authData.email} already exists`);
@@ -30,16 +31,16 @@ export class AuthService {
 
   public async getAuthenticatedUser(email: string, plainTextPassword: string) {
     try {
-      //const user = await this.usersService.getByEmail(email);
       const filters = { email };
       const user = await this.usersService.findOne({ filters });
+
       if (!user) {
         throw new NotFoundException(`User with ${email} does not exist`);
       }
-      await this.verifyPassword(plainTextPassword, user?.password);
-      delete user?.password;
 
-      return user;
+      await this.verifyPassword(plainTextPassword, user?.password);
+
+      return { ...user, password: undefined };
     } catch (error) {
       throw new BadRequestException('Wrong credentials provided');
     }
@@ -52,19 +53,19 @@ export class AuthService {
     }
   }
 
-  async login(user: any) {
-    const payload = {
-      username: user.email as string,
-      password: user.password as string,
-    };
-    const filters = { email: user.username };
-    //const recordUser = await this.usersService.findOne({ filters });
+  async login(userRequest: LoginAuthDto) {
+    const filters = { email: userRequest.email };
+    const user: User = await this.usersService.findOne({ filters });
 
-    //const { email, id, role } = recordUser;
+    const payload = {
+      email: user?.email,
+      sub: user?.id,
+    };
+
     return {
-      //  access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(payload),
       //  refresh_token: await this.generateRefreshToken(recordUser.id),
-      user: {}, //email, id, role },
+      user: { ...user, password: undefined },
     };
   }
 }

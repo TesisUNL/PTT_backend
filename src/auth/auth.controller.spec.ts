@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../api/users/entities/user.entity';
@@ -24,6 +25,7 @@ describe('AuthController', () => {
           provide: getRepositoryToken(User),
           useValue: usersRepository,
         },
+        JwtService,
       ],
     }).compile();
 
