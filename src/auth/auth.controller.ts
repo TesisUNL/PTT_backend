@@ -11,6 +11,7 @@ import { LocalAuthenticationGuard } from './guards/localAuthentication.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @ApiBearerAuth()
   @Post('register')
   create(@Body() authData: CreateUserDto) {
