@@ -48,3 +48,9 @@ export const processUsersQueries = (queryParams: IQuery): TQueryOptionsAttractio
 
   return query;
 };
+
+export const mapUser = (user: User) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password, ...result } = user;
+  return result;
+};

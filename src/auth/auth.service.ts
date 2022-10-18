@@ -6,6 +6,7 @@ import { DatabaseTypeOrmError } from '../api/utils';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../api/users/entities/user.entity';
 import { LoginAuthDto } from './dto/login-auth.dto';
+import { mapUser } from '../api/users/users.utils';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
         password: hashedPassword,
       });
 
-      return { ...createdUser, password: undefined };
+      return mapUser(createdUser);
     } catch (error) {
       if (error?.code && error.code === DatabaseTypeOrmError?.UniqueConstraintError) {
         throw new BadRequestException(`User with email:${authData.email} already exists`);
@@ -40,7 +41,7 @@ export class AuthService {
 
       await this.verifyPassword(plainTextPassword, user?.password);
 
-      return { ...user, password: undefined };
+      return user;
     } catch (error) {
       throw new BadRequestException('Wrong credentials provided');
     }
@@ -65,7 +66,7 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
       //  refresh_token: await this.generateRefreshToken(recordUser.id),
-      user: { ...user, password: undefined },
+      user: mapUser(user),
     };
   }
 }
