@@ -27,7 +27,7 @@ export class User {
   authSocialToken?: string;
 
   // TODO: add password hashing ONLY IF WE USE USERNAME/PASSWORD AUTHENTICATION LOCAL STRATEGY
-  @Column({ length: 255 })
+  @Column({ length: 1024 })
   password: string;
 
   @Column({ default: true })

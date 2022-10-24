@@ -13,8 +13,8 @@ export class ConfigService {
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE_NAME,
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: Boolean(process.env.ORM_SYNC),
-        logging: Boolean(process.env.DB_DEBUG),
+        synchronize: Boolean(process.env.ORM_SYNC && process.env.ORM_SYNC.toLowerCase().trim() == 'true'),
+        logging: Boolean(process.env.DB_DEBUG && process.env.DB_DEBUG.toLowerCase().trim() == 'true'),
       },
     };
     return config.database;
