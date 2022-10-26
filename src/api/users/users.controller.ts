@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { parseQuery, QueryParamsDto } from '../utils';
+import { mapUser } from './users.utils';
 
 @ApiBearerAuth()
 @Controller('users')
@@ -17,17 +18,17 @@ export class UsersController {
   }
 
   @Get()
-  findAll(@Query() queryParamsDto: QueryParamsDto) {
+  async findAll(@Query() queryParamsDto: QueryParamsDto) {
     const query = parseQuery(queryParamsDto);
-
-    return this.usersService.findAll(query);
+    const users = await this.usersService.findAll(query);
+    return users.map((user) => mapUser(user));
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     const filters = { id };
-
-    return this.usersService.findOne({ filters });
+    const user = await this.usersService.findOne({ filters });
+    return mapUser(user);
   }
 
   @Patch(':id')
