@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IQuery } from '../utils';
 import { processUsersQueries } from './users.utils';
+import { In } from 'typeorm';
 
 @Injectable()
 export class UsersService {
@@ -32,11 +33,26 @@ export class UsersService {
     return this.usersRepository.findOne(query);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = await this.usersRepository.findOne(id);
+    if (!user) {
+      throw new NotFoundException(`User with ${id} not found`);
+    }
+
+    const updateUser = Object.assign(user, updateUserDto);
+    return this.usersRepository.save(updateUser);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async bulkUpdate(ids: string[], updateUserDto: UpdateUserDto) {
+    if (!ids) {
+      throw new BadRequestException(`No users id provided`);
+    }
+
+    return this.usersRepository.update(
+      {
+        id: In(ids),
+      },
+      updateUserDto,
+    );
   }
 }
