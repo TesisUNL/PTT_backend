@@ -9,5 +9,12 @@
   "editor.tabSize": 2,
   "eslint.run": "onSave",
   "files.eol": "\n",
-  "sort-imports.on-save": true
+  "sort-imports.on-save": true,
+  "cSpell.words": [
+    "Mancomunidad",
+    "nestjs",
+    "ruta",
+    "Seco",
+    "turística"
+  ]
 }

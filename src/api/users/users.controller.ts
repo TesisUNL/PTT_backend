@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { BulkUpdateUserDto, UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { parseQuery, QueryParamsDto } from '../utils';
 import { mapUser } from './users.utils';
@@ -31,13 +31,24 @@ export class UsersController {
     return mapUser(user);
   }
 
+  @Patch('/activate/:id')
+  async activate(@Param('id') id: string) {
+    return this.usersService.update(id, { isActive: true });
+  }
+
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return this.usersService.update(id, { isActive: false });
+  }
+
+  @Put('/bulkUpdate')
+  async bulkUpdate(@Body() bulkUpdateUserDto: BulkUpdateUserDto) {
+    const { ids, ...updateUserDto } = bulkUpdateUserDto;
+    return this.usersService.bulkUpdate(ids, updateUserDto);
   }
 }
