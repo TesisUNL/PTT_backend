@@ -12,8 +12,10 @@ export class CantonsService {
     private readonly cantonRepository: Repository<Canton>,
   ) {}
 
-  create(createCantonDto: CreateCantonDto) {
-    return 'This action adds a new canton';
+  async create(createCantonDto: CreateCantonDto) {
+    const newCanton = await this.cantonRepository.create(createCantonDto);
+    await this.cantonRepository.save(newCanton);
+    return newCanton;
   }
 
   findAll() {
