@@ -3,4 +3,3 @@ export class CreateCantonDto {
   description?: string;
   province?: string;
 }
-
