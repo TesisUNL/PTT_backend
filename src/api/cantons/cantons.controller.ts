@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { parseQuery, QueryParamsDto } from '../utils';
 import { CantonsService } from './cantons.service';
 import { CreateCantonDto } from './dto/create-canton.dto';
 import { UpdateCantonDto } from './dto/update-canton.dto';
@@ -16,8 +17,9 @@ export class CantonsController {
   }
 
   @Get()
-  findAll() {
-    return this.cantonsService.findAll();
+  findAll(@Query() queryParamsDto: QueryParamsDto) {
+    const query = parseQuery(queryParamsDto);
+    return this.cantonsService.findAll(query);
   }
 
   @Get(':id')

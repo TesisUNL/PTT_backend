@@ -1,8 +1,9 @@
 import { In, Like } from 'typeorm';
 import { QueryParamsDto } from '.';
 
-export interface IQueryTypeOrm {
+export interface IQueryTypeOrm<Entity = any> {
   where: { [key: string]: string | object | number | boolean };
+  relations: (keyof Entity)[];
 }
 export interface IQuery {
   filters?: TFIlter;
@@ -44,11 +45,16 @@ export function parseQuery(queryParamsDto: QueryParamsDto): IQuery {
   const query: IQuery = {};
   try {
     const filters = queryParamsDto?.filters && JSON.parse(queryParamsDto.filters.toString());
+    const relations = queryParamsDto?.relations && JSON.parse(queryParamsDto.relations.toString());
     if (filters) {
       query['filters'] = Object.keys(filters).reduce((acc, k) => {
         acc[k.replace(/\s/g, '')] = filters[k];
         return acc;
       }, {});
+    }
+
+    if (relations) {
+      query['relations'] = relations.map((key: string) => key.replace(/\s/g, ''));
     }
   } catch (error) {
     console.error(error);

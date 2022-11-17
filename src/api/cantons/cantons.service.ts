@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { IQuery } from '../utils';
+import { processCantonsQueries } from './cantons.utils';
 import { CreateCantonDto } from './dto/create-canton.dto';
 import { UpdateCantonDto } from './dto/update-canton.dto';
 import { Canton } from './entities/canton.entity';
@@ -18,8 +20,10 @@ export class CantonsService {
     return newCanton;
   }
 
-  findAll() {
-    return `This action returns all cantons`;
+  findAll(queryParams: IQuery) {
+    const query = processCantonsQueries(queryParams);
+
+    return this.cantonRepository.find(query);
   }
 
   async findOne(id: string) {
