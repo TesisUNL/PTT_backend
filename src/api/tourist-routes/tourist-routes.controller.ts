@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UnauthorizedException } from '@nestjs/common';
 import { TouristRoutesService } from './tourist-routes.service';
 import { CreateTouristRouteDto } from './dto/create-tourist-route.dto';
 import { UpdateTouristRouteDto } from './dto/update-tourist-route.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { APP_ROLES } from '../utils';
 
 @ApiBearerAuth()
 @Controller('tourist-routes')
@@ -11,8 +12,14 @@ export class TouristRoutesController {
   constructor(private readonly touristRoutesService: TouristRoutesService) {}
 
   @Post()
-  create(@Body() createTouristRouteDto: CreateTouristRouteDto) {
-    return this.touristRoutesService.create(createTouristRouteDto);
+  create(@Request() req, @Body() createTouristRouteDto: CreateTouristRouteDto) {
+    const { id, role } = req?.user;
+    // Only admins can create tourist routes for other users
+    if (role !== APP_ROLES.ADMIN && !createTouristRouteDto.isUserRoute) {
+      throw new UnauthorizedException('You are not authorized to create a tourist route for others users');
+    }
+
+    return this.touristRoutesService.create(createTouristRouteDto, id);
   }
 
   @Get()

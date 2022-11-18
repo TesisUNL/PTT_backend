@@ -24,6 +24,6 @@ export class ConfigService {
     return process.env.JWT_SECRET || 'secret';
   }
   get JWT_EXPIRATION_TIME(): number {
-    return parseInt(process.env.JWT_EXPIRATION_TIME) || 3600;
+    return parseInt(process.env.JWT_EXPIRATION_TIME) || 3600 * 24 * 7;
   }
 }
