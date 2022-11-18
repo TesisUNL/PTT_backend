@@ -6,5 +6,5 @@ export class CreateAttractionDto {
   long_description?: string;
   cover_image?: string;
   images?: string[];
-  cantonId: string;
+  cantonName: string;
 }

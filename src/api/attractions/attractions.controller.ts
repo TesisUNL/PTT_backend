@@ -14,8 +14,8 @@ export class AttractionsController {
 
   @Post()
   create(@Body() createAttractionDto: CreateAttractionDto) {
-    if (!createAttractionDto?.cantonId) {
-      throw new BadRequestException('The canton id is not defined, please provide one');
+    if (!createAttractionDto?.cantonName) {
+      throw new BadRequestException('The canton is not defined, please provide one');
     }
 
     return this.attractionsService.create(createAttractionDto);
