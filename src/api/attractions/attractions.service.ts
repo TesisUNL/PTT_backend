@@ -18,12 +18,12 @@ export class AttractionsService {
   ) {}
 
   async create(createAttractionDto: CreateAttractionDto) {
-    const { cantonId, ...attractionInfo } = createAttractionDto;
+    const { cantonName, ...attractionInfo } = createAttractionDto;
 
-    const canton = await this.cantonRepository.findOne({ id: cantonId });
+    const canton = await this.cantonRepository.findOne({ name: cantonName });
 
     if (!canton) {
-      throw new NotFoundException(`not found canton with the id : ${cantonId}`);
+      throw new NotFoundException(`Not found canton with the name : ${cantonName}`);
     }
 
     const attractionToSave = {
