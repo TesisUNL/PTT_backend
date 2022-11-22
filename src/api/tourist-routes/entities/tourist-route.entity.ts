@@ -19,15 +19,18 @@ export class TouristRoute {
   @Column({ length: 255 })
   name: string;
 
+  @Column({ default: true })
+  isUserRoute: boolean;
+
   @Column({ default: 1 })
-  views: number;
+  views: number; //count views
 
   // maybe we can think about this is useful or not its reference to length (km or m of the travel)
   @Column({ nullable: true })
   path_length: number;
 
   @ManyToOne(() => User)
-  user: User;
+  owner: User;
 
   // https://orkhan.gitbook.io/typeorm/docs/many-to-many-relations
   @ManyToMany(() => Attraction)
