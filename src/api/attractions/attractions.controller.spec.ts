@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Canton } from '../cantons/entities/canton.entity';
+import { ConfigService } from '../config/config.service';
 import { AttractionsController } from './attractions.controller';
 import { AttractionsService } from './attractions.service';
 import { Attraction } from './entities/attraction.entity';
@@ -14,6 +15,7 @@ describe('AttractionsController', () => {
       controllers: [AttractionsController],
       providers: [
         AttractionsService,
+        ConfigService,
         {
           provide: getRepositoryToken(Attraction),
           useValue: Attraction,
