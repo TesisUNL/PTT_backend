@@ -58,8 +58,14 @@ export class AttractionsService {
     return this.attractionRepository.findOne(query);
   }
 
-  update(id: number, updateAttractionDto: UpdateAttractionDto) {
-    return `This action updates a #${id} attraction`;
+  async update(id: string, updateAttractionDto: UpdateAttractionDto) {
+    const attraction = await this.attractionRepository.findOne(id);
+    if (!attraction) {
+      throw new NotFoundException(`attraction with ${id} not found`);
+    }
+
+    const updateAttraction = Object.assign(attraction, updateAttractionDto);
+    return this.attractionRepository.save(updateAttraction);
   }
 
   remove(id: number) {

@@ -26,4 +26,8 @@ export class ConfigService {
   get JWT_EXPIRATION_TIME(): number {
     return parseInt(process.env.JWT_EXPIRATION_TIME) || 3600 * 24 * 7;
   }
+
+  get UPLOADED_FILES_DESTINATION(): string {
+    return process.env.UPLOADED_FILES_DESTINATION || 'public/uploads/';
+  }
 }

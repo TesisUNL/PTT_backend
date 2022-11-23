@@ -2,6 +2,8 @@ import { FindManyOptions, FindOneOptions } from 'typeorm';
 import { IOperationFilter, IQuery, IQueryTypeOrm, processQuery } from '../utils/utils';
 import { Attraction } from './entities/attraction.entity';
 
+export const mapFilesPath = (files: Express.Multer.File[]) => files?.map((file) => file.path.replace('public/', ''));
+
 export enum TransformationFilterAttraction {
   Id = 'id',
   Name = 'name',
