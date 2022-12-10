@@ -67,17 +67,16 @@ export function mapAttractionEntity(attractionData: Attraction): IApiAttractionE
       'long_description',
       'cover_image',
       'images',
+      'created_at',
       'canton',
     ] || []
   ).reduce((acc: IApiAttractionEntity, element: string) => {
-    if (element != 'canton') {
-      acc[element] = attractionData[element];
-    }
-
     if (element == 'canton' && attractionData?.[element]) {
       acc[element] = attractionData[element]?.name;
+      return acc;
     }
 
+    acc[element] = attractionData[element];
     return acc;
   }, {} as IApiAttractionEntity);
 }
