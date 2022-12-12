@@ -14,7 +14,7 @@ export interface IAttractionFilter {
   name: IOperationFilter | string;
 }
 
-export type TQueryOptionsAttractions = FindOneOptions<Attraction> | FindManyOptions<Attraction>;
+export type TQueryOptionsAttractions = FindManyOptions<Attraction> & FindOneOptions<Attraction>;
 
 const resolverAttractionFilters: {
   [key in TransformationFilterAttraction]?: (arg: IAttractionFilter, query: IQueryTypeOrm) => object;
@@ -44,6 +44,15 @@ export const processAttractionQueries = (queryParams: IQuery): TQueryOptionsAttr
   return query;
 };
 
+export const processAttractionQueriesPagination = (queryParams: IQuery): TQueryOptionsAttractions => {
+  const query = processAttractionQueries(queryParams);
+  if (queryParams?.pagination) {
+    query.skip = queryParams?.pagination?.start;
+    query.take = queryParams?.pagination?.limit;
+  }
+
+  return query;
+};
 export interface IApiAttractionEntity {
   id: string;
   name: string;

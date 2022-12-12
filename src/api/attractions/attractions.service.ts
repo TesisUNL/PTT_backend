@@ -6,7 +6,7 @@ import { UpdateAttractionDto } from './dto/update-attraction.dto';
 import { Attraction } from './entities/attraction.entity';
 import { Canton } from '../cantons/entities/canton.entity';
 import { IQuery } from '../utils';
-import { processAttractionQueries } from './attraction.utils';
+import { processAttractionQueries, processAttractionQueriesPagination } from './attraction.utils';
 
 @Injectable()
 export class AttractionsService {
@@ -39,7 +39,7 @@ export class AttractionsService {
   }
 
   findAll(queryParams: IQuery) {
-    const processQuery = processAttractionQueries(queryParams);
+    const processQuery = processAttractionQueriesPagination(queryParams);
     const query = { ...processQuery, relations: ['canton'] };
 
     return this.attractionRepository.find(query);

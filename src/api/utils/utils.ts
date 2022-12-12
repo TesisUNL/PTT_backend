@@ -8,6 +8,7 @@ export interface IQueryTypeOrm<Entity = any> {
 export interface IQuery {
   filters?: TFIlter;
   relations?: Array<string>;
+  pagination?: { start: number; limit: number };
 }
 
 export type TFIlter = {
@@ -45,6 +46,7 @@ export function parseQuery(queryParamsDto: QueryParamsDto): IQuery {
   const query: IQuery = {};
   try {
     const filters = queryParamsDto?.filters && JSON.parse(queryParamsDto.filters.toString());
+    const pagination = queryParamsDto?.pagination && JSON.parse(queryParamsDto.pagination.toString());
     const relations = queryParamsDto?.relations && JSON.parse(queryParamsDto.relations.toString());
     if (filters) {
       query['filters'] = Object.keys(filters).reduce((acc, k) => {
@@ -55,6 +57,10 @@ export function parseQuery(queryParamsDto: QueryParamsDto): IQuery {
 
     if (relations) {
       query['relations'] = relations.map((key: string) => key.replace(/\s/g, ''));
+    }
+
+    if (pagination && pagination.start && pagination.limit) {
+      query['pagination'] = pagination;
     }
   } catch (error) {
     console.error(error);
