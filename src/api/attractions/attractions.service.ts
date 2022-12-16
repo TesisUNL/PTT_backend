@@ -42,7 +42,7 @@ export class AttractionsService {
     const processQuery = processAttractionQueriesPagination(queryParams);
     const query = { ...processQuery, relations: ['canton'] };
 
-    return this.attractionRepository.find(query);
+    return this.attractionRepository.find({ ...query, order: { created_at: 'ASC' } });
   }
 
   findAllByCanton(cantonName: string) {

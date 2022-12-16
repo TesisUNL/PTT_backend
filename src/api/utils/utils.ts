@@ -59,7 +59,7 @@ export function parseQuery(queryParamsDto: QueryParamsDto): IQuery {
       query['relations'] = relations.map((key: string) => key.replace(/\s/g, ''));
     }
 
-    if (pagination && pagination.start && pagination.limit) {
+    if (pagination) {
       query['pagination'] = pagination;
     }
   } catch (error) {
