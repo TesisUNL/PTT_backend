@@ -29,7 +29,7 @@ export class AttractionsController {
     return attractions.map((attraction) => mapAttractionEntity(attraction));
   }
 
-  @Get(':cantonName')
+  @Get('byCanton/:cantonName')
   async findAllByCanton(@Param('cantonName') cantonName: string) {
     const attractions = await this.attractionsService.findAllByCanton(cantonName);
 

@@ -51,7 +51,10 @@ export class TouristRoutesService {
   }
 
   findAll() {
-    return this.touristRouteRepository.find({ relations: ['attractions', 'owner'] });
+    return this.touristRouteRepository.find({
+      where: { isUserRoute: false },
+      relations: ['attractions'],
+    });
   }
 
   findAllByOwner(userId: string) {
