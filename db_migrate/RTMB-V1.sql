@@ -79,12 +79,12 @@ CREATE TABLE `canton` (
 LOCK TABLES `canton` WRITE;
 /*!40000 ALTER TABLE `canton` DISABLE KEYS */;
 INSERT INTO `canton` VALUES
-('0a2736f3-4291-4124-a391-412c79424ee8','Zapotillo',NULL,'Loja','2022-11-15 02:00:21.294454','2022-11-15 02:00:21.294454'),
-('1825a10d-bb7a-428b-b87e-e408cef7679f','Paltas ',NULL,'Loja','2022-11-15 02:00:44.283145','2022-11-15 02:00:44.283145'),
-('3957d66d-1bc6-463e-bc28-61073b443fb6','Celica',NULL,'Loja','2022-11-15 02:00:28.095369','2022-11-15 02:00:28.095369'),
-('397b2b92-0f9e-4af3-abed-90be4e7befc7','Puyango',NULL,'Loja','2022-11-15 02:00:50.971436','2022-11-15 02:00:50.971436'),
-('8f02e6b9-ffb8-44a7-b8c3-cc9884bcffe4','Macará',NULL,'Loja','2022-11-15 02:00:11.473475','2022-11-15 02:00:11.473475'),
-('b4f3beb0-5a8f-495b-b1ea-8ac46470d7b7','Pindal',NULL,'Loja','2022-11-15 02:00:39.829845','2022-11-15 02:00:39.829845');
+('0a2736f3-4291-4124-a391-412c79424ee8','Zapotillo','https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Bandera_del_Cant%C3%B3n_Zapotillo.png/200px-Bandera_del_Cant%C3%B3n_Zapotillo.png','Loja','2022-11-15 02:00:21.294454','2022-11-15 02:00:21.294454'),
+('1825a10d-bb7a-428b-b87e-e408cef7679f','Paltas', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Bandera_de_Paltas.png/800px-Bandera_de_Paltas.png','Loja','2022-11-15 02:00:44.283145','2022-11-15 02:00:44.283145'),
+('3957d66d-1bc6-463e-bc28-61073b443fb6','Celica', 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Bandera_de_Celica.png','Loja','2022-11-15 02:00:28.095369','2022-11-15 02:00:28.095369'),
+('397b2b92-0f9e-4af3-abed-90be4e7befc7','Puyango', 'https://upload.wikimedia.org/wikipedia/commons/4/40/Bandera_de_Puyango.png','Loja','2022-11-15 02:00:50.971436','2022-11-15 02:00:50.971436'),
+('8f02e6b9-ffb8-44a7-b8c3-cc9884bcffe4','Macará','https://upload.wikimedia.org/wikipedia/commons/c/cd/Bandera_de_Macar%C3%A1.png','Loja','2022-11-15 02:00:11.473475','2022-11-15 02:00:11.473475'),
+('b4f3beb0-5a8f-495b-b1ea-8ac46470d7b7','Pindal','https://upload.wikimedia.org/wikipedia/commons/2/2b/Bandera_de_Pindal.png','Loja','2022-11-15 02:00:39.829845','2022-11-15 02:00:39.829845');
 /*!40000 ALTER TABLE `canton` ENABLE KEYS */;
 UNLOCK TABLES;
 

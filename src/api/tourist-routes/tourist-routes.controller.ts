@@ -23,8 +23,15 @@ export class TouristRoutesController {
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.touristRoutesService.findAll();
+  }
+
+  @Get(':ownerId')
+  async findAllByCanton(@Param('ownerId') ownerId: string) {
+    const routes = await this.touristRoutesService.findAllByOwner(ownerId);
+
+    return routes;
   }
 
   @Get(':id')
