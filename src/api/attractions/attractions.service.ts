@@ -45,6 +45,13 @@ export class AttractionsService {
     return this.attractionRepository.find(query);
   }
 
+  findAllByCanton(cantonName: string) {
+    return this.attractionRepository.find({
+      where: { canton: { name: cantonName } },
+      relations: ['canton'],
+    });
+  }
+
   async findOne(queryParams: IQuery) {
     const query = processAttractionQueries(queryParams);
 

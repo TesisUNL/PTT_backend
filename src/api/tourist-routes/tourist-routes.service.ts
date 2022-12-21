@@ -51,7 +51,14 @@ export class TouristRoutesService {
   }
 
   findAll() {
-    return `This action returns all touristRoutes`;
+    return this.touristRouteRepository.find({ relations: ['attractions', 'owner'] });
+  }
+
+  findAllByOwner(userId: string) {
+    return this.touristRouteRepository.find({
+      where: { owner: { id: userId } },
+      relations: ['attractions', 'owner'],
+    });
   }
 
   findOne(id: number) {

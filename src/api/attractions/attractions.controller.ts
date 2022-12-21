@@ -29,6 +29,13 @@ export class AttractionsController {
     return attractions.map((attraction) => mapAttractionEntity(attraction));
   }
 
+  @Get(':cantonName')
+  async findAllByCanton(@Param('cantonName') cantonName: string) {
+    const attractions = await this.attractionsService.findAllByCanton(cantonName);
+
+    return attractions.map((attraction) => mapAttractionEntity(attraction));
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     const filters = { id };
