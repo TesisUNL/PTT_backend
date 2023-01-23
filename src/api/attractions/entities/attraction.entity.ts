@@ -9,6 +9,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Rating } from '../../ratings/entities/rating.entity';
+import { ColumnNumericTransformer } from './utils';
 
 @Entity()
 export class Attraction {
@@ -18,10 +19,10 @@ export class Attraction {
   @Column({ length: 255 })
   name: string;
 
-  @Column({ nullable: true, type: 'float' })
+  @Column({ nullable: true, type: 'decimal', precision: 18, scale: 15, transformer: new ColumnNumericTransformer() })
   latitude: number;
 
-  @Column({ nullable: true, type: 'float' })
+  @Column({ nullable: true, type: 'decimal', precision: 18, scale: 15, transformer: new ColumnNumericTransformer() })
   longitude: number;
 
   @Column({ length: 300 })
