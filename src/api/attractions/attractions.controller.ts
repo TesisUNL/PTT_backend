@@ -64,7 +64,6 @@ export class AttractionsController {
   async findAll(@Request() _req, @Query() queryParamsDto: QueryParamsDto) {
     const query = parseQuery(queryParamsDto);
     const attractions = await this.attractionsService.findAll(query);
-
     return attractions.map((attraction) => mapAttractionEntity(attraction));
   }
 
@@ -76,10 +75,10 @@ export class AttractionsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     const filters = { id };
-
-    return this.attractionsService.findOne({ filters });
+    const attraction = await this.attractionsService.findOne({ filters });
+    return mapAttractionEntity(attraction);
   }
 
   @Patch(':id')
@@ -89,7 +88,7 @@ export class AttractionsController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.attractionsService.remove(+id);
+    return this.attractionsService.remove(id);
   }
 
   @Patch(':id/addImage')

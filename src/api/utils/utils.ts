@@ -44,10 +44,12 @@ export function processQuery(filter: IOperationFilter | string | number) {
 
 export function parseQuery(queryParamsDto: QueryParamsDto): IQuery {
   const query: IQuery = {};
+  const getJson = (object: string | object) =>
+    object && typeof object === 'string' ? JSON.parse(object as string) : object;
   try {
-    const filters = queryParamsDto?.filters && JSON.parse(queryParamsDto.filters.toString());
-    const pagination = queryParamsDto?.pagination && JSON.parse(queryParamsDto.pagination.toString());
-    const relations = queryParamsDto?.relations && JSON.parse(queryParamsDto.relations.toString());
+    const filters = getJson(queryParamsDto?.filters);
+    const pagination = getJson(queryParamsDto?.pagination);
+    const relations = getJson(queryParamsDto?.relations);
     if (filters) {
       query['filters'] = Object.keys(filters).reduce((acc, k) => {
         acc[k.replace(/\s/g, '')] = filters[k];

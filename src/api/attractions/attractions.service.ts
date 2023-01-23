@@ -42,7 +42,7 @@ export class AttractionsService {
     const processQuery = processAttractionQueriesPagination(queryParams);
     const query = { ...processQuery, relations: ['canton'] };
 
-    return this.attractionRepository.find({ ...query, order: { created_at: 'ASC' } });
+    return this.attractionRepository.find({ ...query, order: { created_at: 'DESC' } });
   }
 
   findAllByCanton(cantonName: string) {
@@ -55,7 +55,7 @@ export class AttractionsService {
   async findOne(queryParams: IQuery) {
     const query = processAttractionQueries(queryParams);
 
-    return this.attractionRepository.findOne(query);
+    return this.attractionRepository.findOne({ ...query, relations: ['canton'] });
   }
 
   async update(id: string, updateAttractionDto: UpdateAttractionDto) {
@@ -68,7 +68,12 @@ export class AttractionsService {
     return this.attractionRepository.save(updateAttraction);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} attraction`;
+  async remove(id: string) {
+    const attraction = await this.attractionRepository.findOne(id);
+    if (!attraction) {
+      throw new NotFoundException(`Attraction with ${id} not found`);
+    }
+
+    return this.attractionRepository.remove(attraction);
   }
 }
