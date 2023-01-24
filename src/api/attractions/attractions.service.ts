@@ -7,6 +7,8 @@ import { Attraction } from './entities/attraction.entity';
 import { Canton } from '../cantons/entities/canton.entity';
 import { IQuery } from '../utils';
 import { processAttractionQueries, processAttractionQueriesPagination } from './attraction.utils';
+import { FilesService } from '../files/files.service';
+import { FileData } from '../files/imterface';
 
 @Injectable()
 export class AttractionsService {
@@ -15,7 +17,17 @@ export class AttractionsService {
     private readonly attractionRepository: Repository<Attraction>,
     @InjectRepository(Canton)
     private readonly cantonRepository: Repository<Canton>,
+    private readonly filesService: FilesService,
   ) {}
+
+  async testI(fileBuffer, fileName) {
+    const a: FileData = { dataBuffer: fileBuffer, fileName: fileName };
+    return this.filesService.uploadPublicFile(a);
+  }
+
+  async testID(name) {
+    return this.filesService.deletePublicFile(name);
+  }
 
   async create(createAttractionDto: CreateAttractionDto) {
     const { cantonName, ...attractionInfo } = createAttractionDto;

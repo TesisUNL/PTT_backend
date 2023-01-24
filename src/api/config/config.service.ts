@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { AwsConfig } from './interface';
 
 @Injectable()
 export class ConfigService {
@@ -23,6 +24,19 @@ export class ConfigService {
   get JWT_SECRET(): string {
     return process.env.JWT_SECRET || 'secret';
   }
+
+  get AwsConfig(): AwsConfig {
+    const config = {
+      aws: {
+        AWS_REGION: process.env.AWS_REGION || 'us-east-1',
+        AWS_ACCESS_KEY_ID: process.env?.AWS_ACCESS_KEY_ID,
+        AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+        BUCKET_NAME: process.env.BUCKET_NAME || 'rtmb',
+      },
+    };
+    return config.aws;
+  }
+
   get JWT_EXPIRATION_TIME(): number {
     return parseInt(process.env.JWT_EXPIRATION_TIME) || 3600 * 24 * 7;
   }
