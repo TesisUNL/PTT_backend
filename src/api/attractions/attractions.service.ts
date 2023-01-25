@@ -8,7 +8,8 @@ import { Canton } from '../cantons/entities/canton.entity';
 import { IQuery } from '../utils';
 import { processAttractionQueries, processAttractionQueriesPagination } from './attraction.utils';
 import { FilesService } from '../files/files.service';
-import { FileData } from '../files/imterface';
+import { FileData } from '../files/interface';
+import { getImageFileData } from '../files/files.utils';
 
 @Injectable()
 export class AttractionsService {
@@ -20,16 +21,25 @@ export class AttractionsService {
     private readonly filesService: FilesService,
   ) {}
 
-  async testI(fileBuffer, fileName) {
-    const a: FileData = { dataBuffer: fileBuffer, fileName: fileName };
-    return this.filesService.uploadPublicFile(a);
-  }
+  async create(
+    createAttractionDto: CreateAttractionDto,
+    files: { cover_image?: Express.Multer.File[]; images?: Express.Multer.File[] },
+  ) {
+    if (files.cover_image) {
+      const imageToUpload = getImageFileData(files.cover_image[0]);
+      const coverImageUploaded = await this.filesService.uploadPublicFile(imageToUpload);
 
-  async testID(name) {
-    return this.filesService.deletePublicFile(name);
-  }
+      createAttractionDto.cover_image = coverImageUploaded.url;
+    }
 
-  async create(createAttractionDto: CreateAttractionDto) {
+    if (files?.images?.length) {
+      const imagesFileData: FileData[] = files.images.map(getImageFileData);
+      const uploadedImages = await this.filesService.uploadPublicMultipleFile(imagesFileData);
+      const imagesUrl = uploadedImages.map((image) => image.url);
+
+      createAttractionDto.images = imagesUrl;
+    }
+
     const { cantonName, ...attractionInfo } = createAttractionDto;
 
     const canton = await this.cantonRepository.findOne({ name: cantonName });
@@ -70,21 +80,51 @@ export class AttractionsService {
     return this.attractionRepository.findOne({ ...query, relations: ['canton'] });
   }
 
-  async update(id: string, updateAttractionDto: UpdateAttractionDto) {
+  async update(id: string, updateAttractionDto: UpdateAttractionDto, coverImage?: Express.Multer.File) {
     const attraction = await this.attractionRepository.findOne(id);
     if (!attraction) {
       throw new NotFoundException(`attraction with ${id} not found`);
+    }
+
+    if (coverImage) {
+      const oldCoverImage = attraction.cover_image;
+      const newCoverImage = await this.filesService.uploadPublicFile(getImageFileData(coverImage));
+      updateAttractionDto.cover_image = newCoverImage.url;
+      if (oldCoverImage) {
+        await this.filesService.deletePublicFile(oldCoverImage);
+      }
     }
 
     const updateAttraction = Object.assign(attraction, updateAttractionDto);
     return this.attractionRepository.save(updateAttraction);
   }
 
-  async remove(id: string) {
-    const attraction = await this.attractionRepository.findOne(id);
+  async updateImages(id: string, images: Express.Multer.File[]) {
+    const filters = { id };
+    const attraction = await this.findOne({ filters });
     if (!attraction) {
       throw new NotFoundException(`Attraction with ${id} not found`);
     }
+
+    const imagesFileData: FileData[] = images.map(getImageFileData);
+
+    const uploadedImages = await this.filesService.uploadPublicMultipleFile(imagesFileData);
+    const imagesUrls = uploadedImages.map((image) => image.url);
+    const imagesUpdated = [].concat(attraction.images).concat(imagesUrls);
+    const updateAttraction = Object.assign(attraction, { images: imagesUpdated });
+
+    return this.attractionRepository.save(updateAttraction);
+  }
+
+  async remove(id: string) {
+    const attraction = await this.attractionRepository.findOne(id);
+
+    if (!attraction) {
+      throw new NotFoundException(`Attraction with ${id} not found`);
+    }
+
+    const filesToDelete = [].concat(attraction?.images).concat(attraction.cover_image);
+    await this.filesService.deletePublicMultipleFiles(filesToDelete);
 
     return this.attractionRepository.remove(attraction);
   }

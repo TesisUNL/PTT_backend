@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 import { ConfigService } from '../config/config.service';
 import { v4 as uuid } from 'uuid';
-import { FileData } from './imterface';
+import { FileData } from './interface';
 
 @Injectable()
 export class FilesService {
