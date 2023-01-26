@@ -11,15 +11,13 @@ import {
   Request,
   UseInterceptors,
   UploadedFiles,
-  UploadedFile,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { LocalFileFieldsInterceptor, LocalFilesInterceptor } from '../../interceptor/localFiles.interceptors';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { parseQuery, QueryParamsDto } from '../utils';
-import { mapAttractionEntity, mapFilesPath } from './attraction.utils';
+import { mapAttractionEntity } from './attraction.utils';
 import { AttractionsService } from './attractions.service';
 import { CreateAttractionDto } from './dto/create-attraction.dto';
-import { UpdateAttractionDto } from './dto/update-attraction.dto';
+import { UpdateAttractionDto, UploadImageAttractionDto } from './dto/update-attraction.dto';
 import { FileFieldsInterceptor, FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { fileImageConfig } from '../files/files.utils';
 
@@ -27,7 +25,7 @@ import { fileImageConfig } from '../files/files.utils';
 @Controller('attractions')
 @ApiTags('attractions')
 export class AttractionsController {
-  constructor(private readonly attractionsService: AttractionsService) {}
+  constructor(private readonly attractionsService: AttractionsService) { }
 
   @Post()
   @ApiConsumes('multipart/form-data')
@@ -73,6 +71,7 @@ export class AttractionsController {
   }
 
   @Patch(':id')
+  @ApiConsumes('multipart/form-data')
   @UseInterceptors(
     FileInterceptor('cover_image', { fileFilter: fileImageConfig.filter, limits: fileImageConfig.limits }),
   )
@@ -89,11 +88,12 @@ export class AttractionsController {
     return this.attractionsService.remove(id);
   }
 
-  @Patch(':id/addImage')
+  @Patch(':id/addImages')
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
     FilesInterceptor('images', 10, { fileFilter: fileImageConfig.filter, limits: fileImageConfig.limits }),
   )
+  @ApiBody({ type: UploadImageAttractionDto })
   async addImage(@Param('id') id: string, @UploadedFiles() images: Express.Multer.File[]) {
     if (!images.length) {
       throw new BadRequestException("You don't provide images to add, please provide at least one");

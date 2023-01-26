@@ -19,7 +19,7 @@ export class AttractionsService {
     @InjectRepository(Canton)
     private readonly cantonRepository: Repository<Canton>,
     private readonly filesService: FilesService,
-  ) {}
+  ) { }
 
   async create(
     createAttractionDto: CreateAttractionDto,
@@ -93,6 +93,11 @@ export class AttractionsService {
       if (oldCoverImage) {
         await this.filesService.deletePublicFile(oldCoverImage);
       }
+    }
+
+    if (updateAttractionDto.images) {
+      const imagesToDelete = attraction.images?.filter((imageUrl) => !updateAttraction.images.includes(imageUrl));
+      await this.filesService.deletePublicMultipleFiles(imagesToDelete);
     }
 
     const updateAttraction = Object.assign(attraction, updateAttractionDto);
