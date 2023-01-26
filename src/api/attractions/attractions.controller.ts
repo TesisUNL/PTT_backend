@@ -25,7 +25,7 @@ import { fileImageConfig } from '../files/files.utils';
 @Controller('attractions')
 @ApiTags('attractions')
 export class AttractionsController {
-  constructor(private readonly attractionsService: AttractionsService) { }
+  constructor(private readonly attractionsService: AttractionsService) {}
 
   @Post()
   @ApiConsumes('multipart/form-data')

@@ -19,7 +19,7 @@ export class AttractionsService {
     @InjectRepository(Canton)
     private readonly cantonRepository: Repository<Canton>,
     private readonly filesService: FilesService,
-  ) { }
+  ) {}
 
   async create(
     createAttractionDto: CreateAttractionDto,
