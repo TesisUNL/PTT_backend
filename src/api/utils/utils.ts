@@ -44,8 +44,7 @@ export function processQuery(filter: IOperationFilter | string | number) {
 
 export function parseQuery(queryParamsDto: QueryParamsDto): IQuery {
   const query: IQuery = {};
-  const getJson = (object: string | object) =>
-    object && typeof object === 'string' ? JSON.parse(object as string) : object;
+  const getJson = (object: string | object) => (object && typeof object === 'string' ? JSON.parse(object) : object);
   try {
     const filters = getJson(queryParamsDto?.filters);
     const pagination = getJson(queryParamsDto?.pagination);

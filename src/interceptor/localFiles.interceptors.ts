@@ -4,6 +4,7 @@ import { ConfigService } from '../api/config/config.service';
 import { MulterField, MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import { diskStorage } from 'multer';
 
+const MAX_FILE_SIZE = 8000000; // 8MB
 interface LocalFilesInterceptorOptions extends FilesInterceptorOptions {
   fieldName: string;
 }
@@ -33,7 +34,10 @@ export function LocalFilesInterceptor(options: LocalFilesInterceptorOptions): Ty
           destination,
         }),
         fileFilter: options.fileFilter,
-        limits: options.limits,
+        limits: {
+          ...options.limits,
+          fileSize: options?.limits?.fieldSize <= MAX_FILE_SIZE ? options?.limits?.fieldSize : MAX_FILE_SIZE,
+        },
       };
 
       this.fileInterceptor = new (FilesInterceptor(options.fieldName, 10, multerOptions))();
@@ -60,7 +64,10 @@ export function LocalFileFieldsInterceptor(options: LocalFileFieldsInterceptorOp
           destination,
         }),
         fileFilter: options.fileFilter,
-        limits: options.limits,
+        limits: {
+          ...options.limits,
+          fileSize: options?.limits?.fieldSize <= MAX_FILE_SIZE ? options?.limits?.fieldSize : MAX_FILE_SIZE,
+        },
       };
 
       this.fileInterceptor = new (FileFieldsInterceptor(options.fieldNames, multerOptions))();
