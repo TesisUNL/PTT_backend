@@ -81,7 +81,7 @@ export class AttractionsService {
   }
 
   async update(id: string, updateAttractionDto: UpdateAttractionDto, coverImage?: Express.Multer.File) {
-    const attraction = await this.attractionRepository.findOne(id);
+    const attraction = await this.attractionRepository.findOne({ where: { id }, relations: ['canton'] });
     if (!attraction) {
       throw new NotFoundException(`attraction with ${id} not found`);
     }
@@ -95,12 +95,23 @@ export class AttractionsService {
       }
     }
 
-    if (updateAttractionDto.images) {
-      const imagesToDelete = attraction.images?.filter((imageUrl) => !updateAttraction.images.includes(imageUrl));
+    if (updateAttractionDto?.images) {
+      const imagesToDelete = attraction.images?.filter((imageUrl) => !updateAttractionDto.images.includes(imageUrl));
       await this.filesService.deletePublicMultipleFiles(imagesToDelete);
     }
 
-    const updateAttraction = Object.assign(attraction, updateAttractionDto);
+    const { cantonName, ...attractionInfo } = updateAttractionDto;
+
+    if (cantonName && cantonName !== attraction?.canton?.name) {
+      const canton = await this.cantonRepository.findOne({ name: cantonName });
+      if (!canton) {
+        throw new NotFoundException(`Not found canton with the name : ${cantonName}`);
+      }
+
+      attractionInfo['canton'] = canton;
+    }
+
+    const updateAttraction = Object.assign(attraction, attractionInfo);
     return this.attractionRepository.save(updateAttraction);
   }
 
@@ -115,10 +126,8 @@ export class AttractionsService {
 
     const uploadedImages = await this.filesService.uploadPublicMultipleFile(imagesFileData);
     const imagesUrls = uploadedImages.map((image) => image.url);
-    const imagesUpdated = [].concat(attraction.images).concat(imagesUrls);
-    const updateAttraction = Object.assign(attraction, { images: imagesUpdated });
 
-    return this.attractionRepository.save(updateAttraction);
+    return imagesUrls;
   }
 
   async remove(id: string) {

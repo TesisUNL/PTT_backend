@@ -10,7 +10,7 @@ export const fileImageConfig = {
   },
 
   limits: {
-    fileSize: Math.pow(1024, 2),
+    fileSize: 80000,
   },
 };
 

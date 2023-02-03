@@ -11,6 +11,7 @@ import {
   Request,
   UseInterceptors,
   UploadedFiles,
+  UploadedFile,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { parseQuery, QueryParamsDto } from '../utils';
@@ -78,9 +79,9 @@ export class AttractionsController {
   update(
     @Param('id') id: string,
     @Body() updateAttractionDto: UpdateAttractionDto,
-    @UploadedFiles() image?: Express.Multer.File,
+    @UploadedFile() cover_image?: Express.Multer.File,
   ) {
-    return this.attractionsService.update(id, updateAttractionDto, image);
+    return this.attractionsService.update(id, updateAttractionDto, cover_image);
   }
 
   @Delete(':id')
@@ -88,13 +89,14 @@ export class AttractionsController {
     return this.attractionsService.remove(id);
   }
 
-  @Patch(':id/addImages')
+  @Post(':id/addImages')
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
     FilesInterceptor('images', 10, { fileFilter: fileImageConfig.filter, limits: fileImageConfig.limits }),
   )
   @ApiBody({ type: UploadImageAttractionDto })
   async addImage(@Param('id') id: string, @UploadedFiles() images: Express.Multer.File[]) {
+    console.log(images);
     if (!images.length) {
       throw new BadRequestException("You don't provide images to add, please provide at least one");
     }
