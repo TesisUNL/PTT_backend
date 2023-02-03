@@ -36,7 +36,7 @@ export function LocalFilesInterceptor(options: LocalFilesInterceptorOptions): Ty
         fileFilter: options.fileFilter,
         limits: {
           ...options.limits,
-          fileSize: options?.limits?.fieldSize <= MAX_FILE_SIZE ? options?.limits?.fieldSize : MAX_FILE_SIZE,
+          fileSize: 8000000,
         },
       };
 
@@ -66,7 +66,7 @@ export function LocalFileFieldsInterceptor(options: LocalFileFieldsInterceptorOp
         fileFilter: options.fileFilter,
         limits: {
           ...options.limits,
-          fileSize: options?.limits?.fieldSize <= MAX_FILE_SIZE ? options?.limits?.fieldSize : MAX_FILE_SIZE,
+          fileSize: 8000000,
         },
       };
 
