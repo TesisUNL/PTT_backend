@@ -96,7 +96,8 @@ export class AttractionsService {
     }
 
     if (updateAttractionDto?.images) {
-      const imagesToDelete = attraction.images?.filter((imageUrl) => !updateAttractionDto.images.includes(imageUrl));
+      const imagesToDelete =
+        attraction.images?.filter((imageUrl) => !updateAttractionDto.images.includes(imageUrl)) || [];
       await this.filesService.deletePublicMultipleFiles(imagesToDelete);
     }
 
