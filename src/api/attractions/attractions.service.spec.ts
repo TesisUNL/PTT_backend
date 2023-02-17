@@ -3,6 +3,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Canton } from '../cantons/entities/canton.entity';
 import { AttractionsService } from './attractions.service';
 import { Attraction } from './entities/attraction.entity';
+import { FilesService } from '../files/files.service';
+import { ConfigService } from '../config/config.service';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ModelMock<T> {
@@ -33,6 +35,8 @@ describe('AttractionsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AttractionsService,
+        ConfigService,
+        FilesService,
         {
           provide: getRepositoryToken(Attraction),
           useValue: attracionModelMock,

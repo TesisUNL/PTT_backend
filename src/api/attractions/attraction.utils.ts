@@ -2,6 +2,8 @@ import { FindManyOptions, FindOneOptions } from 'typeorm';
 import { IOperationFilter, IQuery, IQueryTypeOrm, processQuery } from '../utils/utils';
 import { Attraction } from './entities/attraction.entity';
 
+export const mapFilesPath = (files: Express.Multer.File[]) => files?.map((file) => file.path.replace('public/', ''));
+
 export enum TransformationFilterAttraction {
   Id = 'id',
   Name = 'name',
@@ -12,7 +14,7 @@ export interface IAttractionFilter {
   name: IOperationFilter | string;
 }
 
-export type TQueryOptionsAttractions = FindOneOptions<Attraction> | FindManyOptions<Attraction>;
+export type TQueryOptionsAttractions = FindManyOptions<Attraction> & FindOneOptions<Attraction>;
 
 const resolverAttractionFilters: {
   [key in TransformationFilterAttraction]?: (arg: IAttractionFilter, query: IQueryTypeOrm) => object;
@@ -42,6 +44,15 @@ export const processAttractionQueries = (queryParams: IQuery): TQueryOptionsAttr
   return query;
 };
 
+export const processAttractionQueriesPagination = (queryParams: IQuery): TQueryOptionsAttractions => {
+  const query = processAttractionQueries(queryParams);
+  if (queryParams?.pagination) {
+    query.skip = queryParams?.pagination?.start;
+    query.take = queryParams?.pagination?.limit;
+  }
+
+  return query;
+};
 export interface IApiAttractionEntity {
   id: string;
   name: string;
@@ -65,17 +76,16 @@ export function mapAttractionEntity(attractionData: Attraction): IApiAttractionE
       'long_description',
       'cover_image',
       'images',
+      'created_at',
       'canton',
     ] || []
   ).reduce((acc: IApiAttractionEntity, element: string) => {
-    if (element != 'canton') {
-      acc[element] = attractionData[element];
-    }
-
     if (element == 'canton' && attractionData?.[element]) {
       acc[element] = attractionData[element]?.name;
+      return acc;
     }
 
+    acc[element] = attractionData[element];
     return acc;
   }, {} as IApiAttractionEntity);
 }

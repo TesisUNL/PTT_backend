@@ -1,4 +1,4 @@
-name: PTT_backend/admin CI
+name: CI
 
 on:
   push:
