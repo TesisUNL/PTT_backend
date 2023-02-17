@@ -13,3 +13,11 @@ export class LoginDto {
   email: string;
   password: string;
 }
+
+export class ResetPasswordDto {
+  email: string;
+}
+
+export class ResetNewPasswordDto {
+  password: string;
+}

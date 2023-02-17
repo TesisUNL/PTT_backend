@@ -26,4 +26,15 @@ export class ConfigService {
   get JWT_EXPIRATION_TIME(): number {
     return parseInt(process.env.JWT_EXPIRATION_TIME) || 3600 * 24 * 7;
   }
+
+  get FRONTEND_URI(): string {
+    return process.env.FRONTEND_URI || 'http://localhost:3000';
+  }
+
+  get MailConfig() {
+    return {
+      user: process.env.mailUser,
+      password: process.env.mailPassword,
+    };
+  }
 }

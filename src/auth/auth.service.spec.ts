@@ -4,6 +4,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../api/users/entities/user.entity';
 import { UsersService } from '../api/users/users.service';
 import { AuthService } from './auth.service';
+import { MailService } from '../api/mail/mail.service';
+import { ConfigService } from '../api/config/config.service';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ModelMock<T> {
@@ -40,6 +42,8 @@ describe('AuthService', () => {
         AuthService,
         UsersService,
         JwtService,
+        MailService,
+        ConfigService,
         {
           provide: getRepositoryToken(User),
           useValue: userModelMock,

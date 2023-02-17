@@ -5,6 +5,8 @@ import { User } from '../api/users/entities/user.entity';
 import { UsersService } from '../api/users/users.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { MailService } from '../api/mail/mail.service';
+import { ConfigService } from '../api/config/config.service';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -21,6 +23,8 @@ describe('AuthController', () => {
       providers: [
         AuthService,
         UsersService,
+        MailService,
+        ConfigService,
         {
           provide: getRepositoryToken(User),
           useValue: usersRepository,
