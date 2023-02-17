@@ -41,10 +41,9 @@ export class ConfigService {
     return parseInt(process.env.JWT_EXPIRATION_TIME) || 3600 * 24 * 7;
   }
 
-
   get UPLOADED_FILES_DESTINATION(): string {
     return process.env.UPLOADED_FILES_DESTINATION || 'public/uploads/';
-}
+  }
 
   get FRONTEND_URI(): string {
     return process.env.FRONTEND_URI || 'http://localhost:3000';
