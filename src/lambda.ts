@@ -15,6 +15,5 @@ const getExpressApp = async (): Promise<any> => {
 
 export const handler: Handler = async (event: any, context: Context, callback: Callback) => {
   server = server ?? (await getExpressApp());
-  console.log(event);
   return server(event, context, callback);
 };
