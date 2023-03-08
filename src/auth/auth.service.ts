@@ -87,7 +87,7 @@ export class AuthService {
     const payload = { email: user.email, name: user.name };
     const token = this.jwtService.sign(payload, { expiresIn: '12h' });
 
-    const url = `${this.configService.FRONTEND_URI}/reset-password?token=${token}`;
+    const url = `${this.configService.FRONTEND_URI}/auth/reset-password-verify/${token}`;
     return await this.mailService.sendEmail(
       email,
       'Reset your password',
