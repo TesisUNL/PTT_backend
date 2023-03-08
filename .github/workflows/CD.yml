@@ -7,7 +7,7 @@ on:
 
 jobs:
   cd-deploy:
-    name: Unit tests 
+    name: Deploy
     runs-on: ubuntu-latest
     env:
       MAIL_USER: rtmbtourist@gmail.com
@@ -33,7 +33,6 @@ jobs:
           cache: 'npm'
       - run: |
           npm install
-          npm run build
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -42,8 +41,9 @@ jobs:
           aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
         
-      - name: serverless deploy
-        uses: serverless/github-action@v3.1
-        with:
-          args: deploy
+      - name: install serverless
+        run: npm i -g serverless
+
+      - name: severless deploy
+        run: sls deploy --verbose --force
 
