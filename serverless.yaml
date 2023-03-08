@@ -1,0 +1,47 @@
+
+
+service: rtmb-backend
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-jetpack
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: us-east-1
+  stage: dev
+  ecr:
+    images:
+      nest-lambda:
+        path: ./
+
+functions:
+  api:
+    architecture: arm64
+    image:
+      name: nest-lambda
+      command:
+        - dist/lambda.handler
+      entryPoint:
+        - '/lambda-entrypoint.sh'
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: /{proxy+}
+    environment:
+      mailUser: ${env:MAIL_USER}
+      mailPassword:  ${env:MAIL_PASSWORD}
+      DB_HOST: ${env:DB_HOST}
+      DB_PORT: ${env:DB_PORT}
+      DB_USERNAME: ${env:DB_USERNAME}
+      DB_PASSWORD: ${env:DB_PASSWORD}
+      DB_DATABASE_NAME: ${env:DB_DATABASE_NAME}
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID_S3: ${env:AWS_ACCESS_KEY_ID_S3}
+      AWS_SECRET_ACCESS_KEY_S3: ${env:AWS_SECRET_ACCESS_KEY_S3}

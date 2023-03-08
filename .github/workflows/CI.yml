@@ -3,7 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - '**'        # matches every branch
+      - 'master'    
+  pull_request:
+    branches:
+      - 'master'
 
 jobs:
   ci-test:

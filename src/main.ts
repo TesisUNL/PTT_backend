@@ -9,6 +9,22 @@ import { ConfigService } from './api/config/config.service';
 
 const PORT = process.env.port || 3000;
 
+export const getApp = async () => {
+  const app = await NestFactory.create(AppModule, { cors: true });
+  const configService = app.get(ConfigService);
+
+  configAWS.update({
+    accessKeyId: configService.AwsConfig?.AWS_ACCESS_KEY_ID,
+    secretAccessKey: configService.AwsConfig?.AWS_SECRET_ACCESS_KEY,
+    region: configService.AwsConfig.AWS_REGION,
+  });
+
+  // security
+  app.use(helmet());
+
+  return app;
+};
+
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors: true });
   const configService = app.get(ConfigService);
