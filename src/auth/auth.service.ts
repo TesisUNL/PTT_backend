@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../api/users/users.service';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 import { CreateUserDto } from '../api/users/dto/create-user.dto';
 import { DatabaseTypeOrmError } from '../api/utils';
 import { JwtService } from '@nestjs/jwt';
@@ -21,7 +21,7 @@ export class AuthService {
   ) {}
 
   public async register(authData: CreateUserDto) {
-    const hashedPassword = await bcrypt.hash(authData.password, 10);
+    const hashedPassword = await bcryptjs.hash(authData.password, 10);
     try {
       const createdUser = await this.usersService.create({
         ...authData,
@@ -56,7 +56,7 @@ export class AuthService {
   }
 
   private async verifyPassword(plainTextPassword: string, hashedPassword: string) {
-    const isPasswordMatching = await bcrypt.compare(plainTextPassword, hashedPassword);
+    const isPasswordMatching = await bcryptjs.compare(plainTextPassword, hashedPassword);
     if (!isPasswordMatching) {
       throw new BadRequestException('Wrong credentials provided');
     }
@@ -107,7 +107,7 @@ export class AuthService {
         throw new BadRequestException(`The user with the email ${email} is not active`);
       }
 
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = await bcryptjs.hash(password, 10);
       return mapUser(await this.usersService.update(user.id, { password: hashedPassword }));
     } catch (error) {
       if (error instanceof TokenExpiredError) {

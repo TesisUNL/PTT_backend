@@ -16,6 +16,7 @@ export class ConfigService {
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: Boolean(process.env.ORM_SYNC && process.env.ORM_SYNC.toLowerCase().trim() == 'true'),
         logging: Boolean(process.env.DB_DEBUG && process.env.DB_DEBUG.toLowerCase().trim() == 'true'),
+        keepConnectionAlive: true,
       },
     };
     return config.database;
@@ -29,8 +30,8 @@ export class ConfigService {
     const config = {
       aws: {
         AWS_REGION: process.env.AWS_REGION || 'us-east-1',
-        AWS_ACCESS_KEY_ID: process.env?.AWS_ACCESS_KEY_ID,
-        AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+        AWS_ACCESS_KEY_ID: process.env?.AWS_ACCESS_KEY_ID_S3,
+        AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY_S3,
         BUCKET_NAME: process.env.BUCKET_NAME || 'rtmb',
       },
     };
