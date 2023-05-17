@@ -9,7 +9,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Rating } from '../../ratings/entities/rating.entity';
-import { ColumnNumericTransformer } from './utils';
+import { ColumnNumericTransformer } from '../../utils';
 
 @Entity()
 export class Attraction {

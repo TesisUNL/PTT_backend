@@ -15,7 +15,7 @@ export class CantonsService {
   ) {}
 
   async create(createCantonDto: CreateCantonDto) {
-    const newCanton = await this.cantonRepository.create(createCantonDto);
+    const newCanton = this.cantonRepository.create(createCantonDto);
     await this.cantonRepository.save(newCanton);
     return newCanton;
   }
