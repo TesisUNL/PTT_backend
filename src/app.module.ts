@@ -12,6 +12,7 @@ import { TouristRoutesModule } from './api/tourist-routes/tourist-routes.module'
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthenticationGuard } from './auth/guards/jwtAuthentication.guard';
+import { TouristServicesModule } from './api/tourist-services/tourist-services.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { JwtAuthenticationGuard } from './auth/guards/jwtAuthentication.guard';
     RatingsModule,
     SharedModule,
     AuthModule,
+    TouristServicesModule,
   ],
   controllers: [AppController],
   providers: [

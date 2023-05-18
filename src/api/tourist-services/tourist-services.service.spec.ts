@@ -1,9 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { TouristServicesService } from './tourist-services.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CantonsService } from './cantons.service';
-import { Canton } from './entities/canton.entity';
-import { FilesService } from '../files/files.service';
-import { ConfigService } from '../config/config.service';
+import { TouristService } from './entities/tourist-service.entity';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ModelMock<T> {
@@ -24,25 +22,23 @@ class ModelMock<T> {
   }
 }
 
-describe('CantonsService', () => {
-  let service: CantonsService;
+describe('TouristServicesService', () => {
+  let service: TouristServicesService;
 
-  const cantonModelMock = new ModelMock<Canton>();
+  const TouristServiceModelMock = new ModelMock<TouristServicesService>();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CantonsService,
-        ConfigService,
-        FilesService,
+        TouristServicesService,
         {
-          provide: getRepositoryToken(Canton),
-          useValue: cantonModelMock,
+          provide: getRepositoryToken(TouristService),
+          useValue: TouristServiceModelMock,
         },
       ],
     }).compile();
 
-    service = module.get<CantonsService>(CantonsService);
+    service = module.get<TouristServicesService>(TouristServicesService);
   });
 
   it('should be defined', () => {

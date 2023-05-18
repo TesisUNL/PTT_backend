@@ -69,3 +69,12 @@ export function parseQuery(queryParamsDto: QueryParamsDto): IQuery {
 
   return query;
 }
+
+export class ColumnNumericTransformer {
+  to(data: number): number {
+    return data;
+  }
+  from(data: string): number {
+    return parseFloat(data);
+  }
+}

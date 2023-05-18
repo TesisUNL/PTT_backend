@@ -1,9 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { parseQuery, QueryParamsDto } from '../utils';
 import { CantonsService } from './cantons.service';
 import { CreateCantonDto } from './dto/create-canton.dto';
 import { UpdateCantonDto } from './dto/update-canton.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiBearerAuth()
 @Controller('cantons')
@@ -12,8 +24,10 @@ export class CantonsController {
   constructor(private readonly cantonsService: CantonsService) {}
 
   @Post()
-  create(@Body() createCantonDto: CreateCantonDto) {
-    return this.cantonsService.create(createCantonDto);
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('presentation_video_file'))
+  create(@Body() createCantonDto: CreateCantonDto, @UploadedFile() videoFile: Express.Multer.File) {
+    return this.cantonsService.create(createCantonDto, videoFile);
   }
 
   @Get()

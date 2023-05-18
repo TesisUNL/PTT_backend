@@ -1,3 +1,4 @@
+import { TouristService } from '../../tourist-services/entities/tourist-service.entity';
 import { Attraction } from '../../attractions/entities/attraction.entity';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 
@@ -17,12 +18,25 @@ export class Canton {
   //tourist_attractions_count: number;
 
   // not of all necessary but could be important to scale (by default = loja)
-  @Column({ default: 'Loja' })
+  @Column({ nullable: true, default: 'Loja' })
   province: string;
+
+  @Column({ nullable: true })
+  flag_image: string;
+
+  // Consider use array instand of string to have more videos
+  // @Column({ type: 'simple-array', nullable: true })
+  // video: string[];
+  @Column({ nullable: true })
+  presentation_video: string;
 
   // relation with tourist attraction one to many
   @OneToMany(() => Attraction, (attraction) => attraction.canton)
   tourist_attractions?: Attraction[];
+
+  // relation with tourist service one to many (comment in the first init)
+  @OneToMany(() => TouristService, (touristService) => touristService.canton)
+  tourist_services?: TouristService[];
 
   @CreateDateColumn({
     type: 'timestamp',

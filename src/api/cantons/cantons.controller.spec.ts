@@ -3,6 +3,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { CantonsController } from './cantons.controller';
 import { CantonsService } from './cantons.service';
 import { Canton } from './entities/canton.entity';
+import { FilesService } from '../files/files.service';
+import { ConfigService } from '../config/config.service';
 
 describe('CantonsController', () => {
   let controller: CantonsController;
@@ -12,6 +14,8 @@ describe('CantonsController', () => {
       controllers: [CantonsController],
       providers: [
         CantonsService,
+        ConfigService,
+        FilesService,
         {
           provide: getRepositoryToken(Canton),
           useValue: Canton,
