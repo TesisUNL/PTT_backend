@@ -14,7 +14,7 @@ export const fileImageConfig = {
   },
 };
 
-export const getImageFileData = ({ originalname, buffer }: Express.Multer.File): FileData => ({
+export const getFileData = ({ originalname, buffer }: Express.Multer.File): FileData => ({
   fileName: originalname,
   dataBuffer: buffer,
 });

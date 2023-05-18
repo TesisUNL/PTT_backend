@@ -10,7 +10,7 @@ export class TouristService {
   @Column({ length: 255 })
   name: string;
 
-  @Column({ type: 'boolean', default: true })
+  @Column({ type: 'boolean', nullable: true, default: true })
   is_certified: boolean;
 
   @ManyToOne(() => Canton)
@@ -19,10 +19,10 @@ export class TouristService {
   @Column({ type: 'enum', enum: AttractionServicesTypes, default: AttractionServicesTypes.OTHER })
   type: string;
 
-  @Column({ nullable: true, type: 'decimal', precision: 18, scale: 15, transformer: new ColumnNumericTransformer() })
+  @Column({ type: 'decimal', precision: 18, scale: 15, transformer: new ColumnNumericTransformer() })
   latitude: number;
 
-  @Column({ nullable: true, type: 'decimal', precision: 18, scale: 15, transformer: new ColumnNumericTransformer() })
+  @Column({ type: 'decimal', precision: 18, scale: 15, transformer: new ColumnNumericTransformer() })
   longitude: number;
 
   @CreateDateColumn({

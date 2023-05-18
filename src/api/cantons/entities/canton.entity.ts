@@ -18,7 +18,7 @@ export class Canton {
   //tourist_attractions_count: number;
 
   // not of all necessary but could be important to scale (by default = loja)
-  @Column({ default: 'Loja' })
+  @Column({ nullable: true, default: 'Loja' })
   province: string;
 
   @Column({ nullable: true })

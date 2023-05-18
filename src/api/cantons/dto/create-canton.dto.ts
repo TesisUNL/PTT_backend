@@ -6,5 +6,6 @@ export class CreateCantonDto {
   province?: string;
   flag_image?: string;
   @ApiProperty({ type: 'string', format: 'binary', required: false })
+  presentation_video_file?: string;
   presentation_video?: string;
 }

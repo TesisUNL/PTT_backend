@@ -6,17 +6,28 @@ import { processCantonsQueries } from './cantons.utils';
 import { CreateCantonDto } from './dto/create-canton.dto';
 import { UpdateCantonDto } from './dto/update-canton.dto';
 import { Canton } from './entities/canton.entity';
+import { getFileData } from '../files/files.utils';
+import { FilesService } from '../files/files.service';
 
 @Injectable()
 export class CantonsService {
   constructor(
     @InjectRepository(Canton)
     private readonly cantonRepository: Repository<Canton>,
+    private readonly filesService: FilesService,
   ) {}
 
-  async create(createCantonDto: CreateCantonDto) {
+  async create(createCantonDto: CreateCantonDto, videoFile: Express.Multer.File) {
+    if (videoFile && !createCantonDto?.presentation_video) {
+      const videoToUpload = getFileData(videoFile);
+      const videoUploaded = await this.filesService.uploadPublicFile(videoToUpload);
+
+      createCantonDto.presentation_video = videoUploaded.url;
+    }
+
     const newCanton = this.cantonRepository.create(createCantonDto);
     await this.cantonRepository.save(newCanton);
+    // Todo: Control errors of duplicate entry for name
     return newCanton;
   }
 

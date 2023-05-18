@@ -9,7 +9,7 @@ import { IQuery } from '../utils';
 import { processAttractionQueries, processAttractionQueriesPagination } from './attraction.utils';
 import { FilesService } from '../files/files.service';
 import { FileData } from '../files/interface';
-import { getImageFileData } from '../files/files.utils';
+import { getFileData } from '../files/files.utils';
 
 @Injectable()
 export class AttractionsService {
@@ -26,14 +26,14 @@ export class AttractionsService {
     files: { cover_image?: Express.Multer.File[]; images?: Express.Multer.File[] },
   ) {
     if (files.cover_image) {
-      const imageToUpload = getImageFileData(files.cover_image[0]);
+      const imageToUpload = getFileData(files.cover_image[0]);
       const coverImageUploaded = await this.filesService.uploadPublicFile(imageToUpload);
 
       createAttractionDto.cover_image = coverImageUploaded.url;
     }
 
     if (files?.images?.length) {
-      const imagesFileData: FileData[] = files.images.map(getImageFileData);
+      const imagesFileData: FileData[] = files.images.map(getFileData);
       const uploadedImages = await this.filesService.uploadPublicMultipleFile(imagesFileData);
       const imagesUrl = uploadedImages.map((image) => image.url);
 
@@ -88,7 +88,7 @@ export class AttractionsService {
 
     if (coverImage) {
       const oldCoverImage = attraction.cover_image;
-      const newCoverImage = await this.filesService.uploadPublicFile(getImageFileData(coverImage));
+      const newCoverImage = await this.filesService.uploadPublicFile(getFileData(coverImage));
       updateAttractionDto.cover_image = newCoverImage.url;
       if (oldCoverImage) {
         await this.filesService.deletePublicFile(oldCoverImage);
@@ -123,7 +123,7 @@ export class AttractionsService {
       throw new NotFoundException(`Attraction with ${id} not found`);
     }
 
-    const imagesFileData: FileData[] = images.map(getImageFileData);
+    const imagesFileData: FileData[] = images.map(getFileData);
 
     const uploadedImages = await this.filesService.uploadPublicMultipleFile(imagesFileData);
     const imagesUrls = uploadedImages.map((image) => image.url);
