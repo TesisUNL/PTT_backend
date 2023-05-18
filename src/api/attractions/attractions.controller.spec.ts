@@ -6,7 +6,6 @@ import { AttractionsController } from './attractions.controller';
 import { AttractionsService } from './attractions.service';
 import { Attraction } from './entities/attraction.entity';
 import { FilesService } from '../files/files.service';
-import { TouristService } from '../../tourist-services/entities/tourist-service.entity';
 
 describe('AttractionsController', () => {
   let controller: AttractionsController;
@@ -19,7 +18,6 @@ describe('AttractionsController', () => {
         AttractionsService,
         ConfigService,
         FilesService,
-        TouristService,
         {
           provide: getRepositoryToken(Attraction),
           useValue: Attraction,

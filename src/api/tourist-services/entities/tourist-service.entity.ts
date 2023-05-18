@@ -1,5 +1,5 @@
-import { Canton } from '../../api/cantons/entities/canton.entity';
-import { AttractionServicesTypes, ColumnNumericTransformer } from '../../api/utils';
+import { Canton } from '../../cantons/entities/canton.entity';
+import { AttractionServicesTypes, ColumnNumericTransformer } from '../../utils';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()

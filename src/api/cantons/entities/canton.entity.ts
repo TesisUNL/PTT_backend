@@ -1,6 +1,6 @@
+import { TouristService } from '../../tourist-services/entities/tourist-service.entity';
 import { Attraction } from '../../attractions/entities/attraction.entity';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
-import { TouristService } from '../../../tourist-services/entities/tourist-service.entity';
 
 @Entity()
 export class Canton {
@@ -34,7 +34,7 @@ export class Canton {
   @OneToMany(() => Attraction, (attraction) => attraction.canton)
   tourist_attractions?: Attraction[];
 
-  // relation with tourist service one to many
+  // relation with tourist service one to many (comment in the first init)
   @OneToMany(() => TouristService, (touristService) => touristService.canton)
   tourist_services?: TouristService[];
 
