@@ -6,9 +6,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany,
+  // OneToMany,
 } from 'typeorm';
-import { Rating } from '../../ratings/entities/rating.entity';
+// import { Rating } from '../../ratings/entities/rating.entity';
 import { ColumnNumericTransformer } from '../../utils';
 
 @Entity()
@@ -41,8 +41,8 @@ export class Attraction {
   @ManyToOne(() => Canton)
   canton: Canton;
 
-  @OneToMany(() => Rating, (rating) => rating.attraction)
-  ratings: Rating[];
+  // @OneToMany(() => Rating, (rating) => rating.attraction)
+  // ratings: Rating[];
 
   @CreateDateColumn({
     type: 'timestamp',
