@@ -16,6 +16,7 @@ export class ConfigService {
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: Boolean(process.env.ORM_SYNC && process.env.ORM_SYNC.toLowerCase().trim() == 'true'),
         logging: Boolean(process.env.DB_DEBUG && process.env.DB_DEBUG.toLowerCase().trim() == 'true'),
+        autoLoadEntities: true,
         keepConnectionAlive: true,
       },
     };

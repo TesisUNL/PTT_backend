@@ -7,7 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SharedModule } from './api/config/config.module';
 import { CantonsModule } from './api/cantons/cantons.module';
 import { AttractionsModule } from './api/attractions/attractions.module';
-import { RatingsModule } from './api/ratings/ratings.module';
+// import { RatingsModule } from './api/ratings/ratings.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthenticationGuard } from './auth/guards/jwtAuthentication.guard';
@@ -20,7 +20,7 @@ import { TouristServicesModule } from './api/tourist-services/tourist-services.m
     UsersModule,
     CantonsModule,
     AttractionsModule,
-    RatingsModule,
+    // RatingsModule,
     SharedModule,
     AuthModule,
     TouristServicesModule,
