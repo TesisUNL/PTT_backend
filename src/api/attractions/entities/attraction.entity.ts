@@ -25,10 +25,10 @@ export class Attraction {
   @Column({ nullable: true, type: 'decimal', precision: 18, scale: 15, transformer: new ColumnNumericTransformer() })
   longitude: number;
 
-  @Column({ length: 300 })
+  @Column({ length: 3000 })
   short_description: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, length: 3000 })
   long_description: string;
 
   // url review possibility of use some free resource to allocate the image if not maybe s3 is a good option
