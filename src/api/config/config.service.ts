@@ -17,6 +17,7 @@ export class ConfigService {
         synchronize: Boolean(process.env.ORM_SYNC && process.env.ORM_SYNC.toLowerCase().trim() == 'true'),
         logging: Boolean(process.env.DB_DEBUG && process.env.DB_DEBUG.toLowerCase().trim() == 'true'),
         keepConnectionAlive: true,
+        autoLoadEntities: true,
       },
     };
     return config.database;

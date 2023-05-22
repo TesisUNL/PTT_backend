@@ -10,7 +10,7 @@ export class Canton {
   @Column({ length: 255, unique: true })
   name: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, length: 3000 })
   description: string;
 
   // ! generate this on the code with count mysql analize that
