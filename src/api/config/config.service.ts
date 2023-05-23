@@ -18,7 +18,6 @@ export class ConfigService {
         logging: Boolean(process.env.DB_DEBUG && process.env.DB_DEBUG.toLowerCase().trim() == 'true'),
         autoLoadEntities: true,
         keepConnectionAlive: true,
-        autoLoadEntities: true,
       },
     };
     return config.database;
